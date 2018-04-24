@@ -1,0 +1,583 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.example.administrator.Palletizer.Debug">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/debug_button_send"
+            android:layout_width="220dp"
+            android:layout_height="78dp"
+            android:layout_marginEnd="72dp"
+            android:layout_marginTop="16dp"
+            android:text="SEND"
+            android:textSize="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/SystemState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="SystemState"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/XAxisSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:hint="XAxisSetting"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/SystemState"
+            app:layout_constraintTop_toBottomOf="@+id/SystemState" />
+
+        <EditText
+            android:id="@+id/YAxisSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="YAxisSetting"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/XAxisSetting"
+            app:layout_constraintTop_toBottomOf="@+id/XAxisSetting" />
+
+        <EditText
+            android:id="@+id/ZAxisSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="ZAxisSetting"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/YAxisSetting"
+            app:layout_constraintTop_toBottomOf="@+id/YAxisSetting" />
+
+        <EditText
+            android:id="@+id/WAxisSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="WAxisSetting"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/ZAxisSetting"
+            app:layout_constraintTop_toBottomOf="@+id/ZAxisSetting" />
+
+        <EditText
+            android:id="@+id/FingerMovement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:hint="FingerMovement"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/WAxisSetting"
+            app:layout_constraintTop_toBottomOf="@+id/WAxisSetting" />
+
+        <EditText
+            android:id="@+id/OuterClawMovement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="OuterClawMovement"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/FingerMovement"
+            app:layout_constraintTop_toBottomOf="@+id/FingerMovement" />
+
+        <EditText
+            android:id="@+id/LocationRollingOver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="LocationRollingOver"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/OuterClawMovement"
+            app:layout_constraintTop_toBottomOf="@+id/OuterClawMovement" />
+
+        <EditText
+            android:id="@+id/TheSpeedOfZAxis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="TheSpeedOfZAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/TheSpeedOfYAxis"
+            app:layout_constraintTop_toBottomOf="@+id/TheSpeedOfYAxis" />
+
+        <EditText
+            android:id="@+id/AlarmAndStop"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="AlarmAndStop"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/OverRunAlarm"
+            app:layout_constraintTop_toBottomOf="@+id/OverRunAlarm" />
+
+        <EditText
+            android:id="@+id/ManualControlTheXAxisOfTheScreen"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="ManualControlTheXAxisOfTheScreen"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/ManualControlOfScreen"
+            app:layout_constraintTop_toBottomOf="@+id/ManualControlOfScreen" />
+
+        <EditText
+            android:id="@+id/ManualControlOfScreen"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:hint="ManualControlOfScreen"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/HostComputerControlTheSpeedOfXAxis"
+            app:layout_constraintTop_toBottomOf="@+id/HostComputerControlTheSpeedOfXAxis" />
+
+        <EditText
+            android:id="@+id/ManualControlTheYAxisOfTheScreen"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="ManualControlTheYAxisOfTheScreen"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/ManualControlTheXAxisOfTheScreen"
+            app:layout_constraintTop_toBottomOf="@+id/ManualControlTheXAxisOfTheScreen" />
+
+        <EditText
+            android:id="@+id/ManualControlTheWAxisOfTheScreen"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="ManualControlTheWAxisOfTheScreen"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/ManualControlTheZAxisOfTheScreen"
+            app:layout_constraintTop_toBottomOf="@+id/ManualControlTheZAxisOfTheScreen" />
+
+        <EditText
+            android:id="@+id/ManualControlTheZAxisOfTheScreen"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="ManualControlTheZAxisOfTheScreen"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/ManualControlTheYAxisOfTheScreen"
+            app:layout_constraintTop_toBottomOf="@+id/ManualControlTheYAxisOfTheScreen" />
+
+        <EditText
+            android:id="@+id/ManualControlTheOuterClawOfTheScreen"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="ManualControlTheOuterClawOfTheScreen"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/ManualControlTheFingerOfTheScreen"
+            app:layout_constraintTop_toBottomOf="@+id/ManualControlTheFingerOfTheScreen" />
+
+        <EditText
+            android:id="@+id/ManualControlTheFingerOfTheScreen"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="ManualControlTheFingerOfTheScreen"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/ManualControlTheWAxisOfTheScreen"
+            app:layout_constraintTop_toBottomOf="@+id/ManualControlTheWAxisOfTheScreen" />
+
+        <EditText
+            android:id="@+id/StorageBinFullA"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:hint="StorageBinFullA"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/ManualControlTheOuterClawOfTheScreen"
+            app:layout_constraintTop_toBottomOf="@+id/ManualControlTheOuterClawOfTheScreen" />
+
+        <EditText
+            android:id="@+id/HostComputerControlTheSpeedOfXAxis"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="76dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="HostComputerControlTheSpeedOfXAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toEndOf="@+id/SystemState"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/TheHighestSpeedOfYAxis"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ems="10"
+            android:hint="TheHighestSpeedOfYAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/CommunicationExchange"
+            app:layout_constraintTop_toBottomOf="@+id/CommunicationExchange" />
+
+        <EditText
+            android:id="@+id/DecelerationTimeOfYAxis"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="DecelerationTimeOfYAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/TheHighestSpeedOfYAxis"
+            app:layout_constraintTop_toBottomOf="@+id/TheHighestSpeedOfYAxis" />
+
+        <EditText
+            android:id="@+id/NoLoadTimeOfYAxis"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="NoLoadTimeOfYAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/DecelerationDistanceOfYAxis"
+            app:layout_constraintTop_toBottomOf="@+id/DecelerationDistanceOfYAxis" />
+
+        <EditText
+            android:id="@+id/DecelerationDistanceOfYAxis"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="DecelerationDistanceOfYAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/DecelerationTimeOfYAxis"
+            app:layout_constraintTop_toBottomOf="@+id/DecelerationTimeOfYAxis" />
+
+        <EditText
+            android:id="@+id/NoLoadTimeOfXAxis"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="NoLoadTimeOfXAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/DecelerationDistanceOfXAxis"
+            app:layout_constraintTop_toBottomOf="@+id/DecelerationDistanceOfXAxis" />
+
+        <EditText
+            android:id="@+id/DecelerationDistanceOfXAxis"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="DecelerationDistanceOfXAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/DecelerationTimeOfXAxis"
+            app:layout_constraintTop_toBottomOf="@+id/DecelerationTimeOfXAxis" />
+
+        <EditText
+            android:id="@+id/WipeDataOfTheChangeTileAndStorageBinFull"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="WipeDataOfTheChangeTileAndStorageBinFull"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/TheTimeOfTheOuterClawHalfOpen"
+            app:layout_constraintTop_toBottomOf="@+id/TheTimeOfTheOuterClawHalfOpen" />
+
+        <EditText
+            android:id="@+id/NoLoadDistanceOfXAxis"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="NoLoadDistanceOfXAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/NoLoadTimeOfXAxis"
+            app:layout_constraintTop_toBottomOf="@+id/NoLoadTimeOfXAxis" />
+
+        <EditText
+            android:id="@+id/TheTimeOfTheOuterClawHalfOpen"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="88dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="TheTimeOfTheOuterClawHalfOpen"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toStartOf="@+id/debug_button_send"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/NearALowSpeed"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="NearALowSpeed"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/WipeDataOfTheChangeTileAndStorageBinFull"
+            app:layout_constraintTop_toBottomOf="@+id/WipeDataOfTheChangeTileAndStorageBinFull" />
+
+        <EditText
+            android:id="@+id/TheNumberOfPackages"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="TheNumberOfPackages"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/NearALowSpeed"
+            app:layout_constraintTop_toBottomOf="@+id/NearALowSpeed" />
+
+        <EditText
+            android:id="@+id/TheHighestSpeedOfXAxis"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="TheHighestSpeedOfXAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/TheNumberOfPackages"
+            app:layout_constraintTop_toBottomOf="@+id/TheNumberOfPackages" />
+
+        <EditText
+            android:id="@+id/DecelerationTimeOfXAxis"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="DecelerationTimeOfXAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/TheHighestSpeedOfXAxis"
+            app:layout_constraintTop_toBottomOf="@+id/TheHighestSpeedOfXAxis" />
+
+        <EditText
+            android:id="@+id/NoLoadDistanceOfYAxis"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="NoLoadDistanceOfYAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/NoLoadTimeOfYAxis"
+            app:layout_constraintTop_toBottomOf="@+id/NoLoadTimeOfYAxis" />
+
+        <EditText
+            android:id="@+id/ManualSpeedOfYAxis"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="ManualSpeedOfYAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/NoLoadDistanceOfYAxis"
+            app:layout_constraintTop_toBottomOf="@+id/NoLoadDistanceOfYAxis" />
+
+        <EditText
+            android:id="@+id/TheHighestSpeedOfZAxis"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:hint="TheHighestSpeedOfZAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/ManualSpeedOfYAxis"
+            app:layout_constraintTop_toBottomOf="@+id/ManualSpeedOfYAxis" />
+
+        <EditText
+            android:id="@+id/DecelerationTimeOfZAxis"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="DecelerationTimeOfZAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/TheHighestSpeedOfZAxis"
+            app:layout_constraintTop_toBottomOf="@+id/TheHighestSpeedOfZAxis" />
+
+        <EditText
+            android:id="@+id/DecelerationDistaceOfZAxis"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="DecelerationDistaceOfZAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/DecelerationTimeOfZAxis"
+            app:layout_constraintTop_toBottomOf="@+id/DecelerationTimeOfZAxis" />
+
+        <EditText
+            android:id="@+id/ManualSpeedOfZAxis"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="ManualSpeedOfZAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/DecelerationDistaceOfZAxis"
+            app:layout_constraintTop_toBottomOf="@+id/DecelerationDistaceOfZAxis" />
+
+        <EditText
+            android:id="@+id/TheAccuracyOfXAxis"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="TheAccuracyOfXAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/ManualSpeedOfXAxis"
+            app:layout_constraintTop_toBottomOf="@+id/ManualSpeedOfXAxis" />
+
+        <EditText
+            android:id="@+id/TheAccuracyOfYAxis"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="TheAccuracyOfYAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/TheAccuracyOfXAxis"
+            app:layout_constraintTop_toBottomOf="@+id/TheAccuracyOfXAxis" />
+
+        <EditText
+            android:id="@+id/TheAccuracyOfZAxis"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="TheAccuracyOfZAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/TheAccuracyOfYAxis"
+            app:layout_constraintTop_toBottomOf="@+id/TheAccuracyOfYAxis" />
+
+        <EditText
+            android:id="@+id/CommunicationExchange"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:hint="CommunicationExchange"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/debug_button_send"
+            app:layout_constraintTop_toBottomOf="@+id/debug_button_send" />
+
+        <EditText
+            android:id="@+id/TheAccuracyOfWAxis"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="TheAccuracyOfWAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/TheAccuracyOfZAxis"
+            app:layout_constraintTop_toBottomOf="@+id/TheAccuracyOfZAxis" />
+
+        <EditText
+            android:id="@+id/ManualSpeedOfXAxis"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="ManualSpeedOfXAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/NoLoadDistanceOfXAxis"
+            app:layout_constraintTop_toBottomOf="@+id/NoLoadDistanceOfXAxis" />
+
+        <EditText
+            android:id="@+id/StorageBinFullB"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="StorageBinFullB"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/StorageBinFullA"
+            app:layout_constraintTop_toBottomOf="@+id/StorageBinFullA" />
+
+        <EditText
+            android:id="@+id/OverRunAlarm"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:hint="OverRunAlarm"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/StorageBinFullB"
+            app:layout_constraintTop_toBottomOf="@+id/StorageBinFullB" />
+
+        <EditText
+            android:id="@+id/TheSpeedOfWAxis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="TheSpeedOfWAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/TheSpeedOfZAxis"
+            app:layout_constraintTop_toBottomOf="@+id/TheSpeedOfZAxis" />
+
+        <EditText
+            android:id="@+id/TheSpeedOfXAxis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:hint="TheSpeedOfXAxis "
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/LocationRollingOver"
+            app:layout_constraintTop_toBottomOf="@+id/LocationRollingOver" />
+
+        <EditText
+            android:id="@+id/TheSpeedOfYAxis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="TheSpeedOfYAxis"
+            android:inputType="number"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/TheSpeedOfXAxis"
+            app:layout_constraintTop_toBottomOf="@+id/TheSpeedOfXAxis" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

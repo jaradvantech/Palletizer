@@ -1,0 +1,83 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.example.administrator.Palletizer.Debug">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/debug_read"
+            android:layout_width="128dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="32dp"
+            android:text="Read"
+            android:textSize="20dp"
+            app:layout_constraintStart_toEndOf="@+id/debug_clear"
+            app:layout_constraintTop_toTopOf="@+id/debug_clear" />
+
+        <Button
+            android:id="@+id/debug_clear"
+            android:layout_width="128dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:text="CLEAR"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/debug_checkBox_autoupdate"
+            app:layout_constraintStart_toEndOf="@+id/debug_checkBox_autoupdate"
+            app:layout_constraintTop_toTopOf="@+id/debug_checkBox_autoupdate"
+            app:layout_constraintVertical_bias="0.75" />
+
+        <TextView
+            android:id="@+id/debug_TextView_data_bool"
+            android:layout_width="613dp"
+            android:layout_height="500dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="32dp"
+            android:text="PLC data (Boolean):"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/debug_TextView_data_int"
+            android:layout_width="531dp"
+            android:layout_height="500dp"
+            android:layout_marginEnd="56dp"
+            android:text="PLC data (Integer):"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/debug_TextView_data_bool" />
+
+        <Button
+            android:id="@+id/debug_write"
+            android:layout_width="128dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="32dp"
+            android:text="Write"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/debug_read"
+            app:layout_constraintTop_toTopOf="@+id/debug_read" />
+
+
+        <CheckBox
+            android:id="@+id/debug_checkBox_autoupdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="40dp"
+            android:text="Auto-upd8"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/debug_TextView_data_bool"
+            app:layout_constraintTop_toBottomOf="@+id/debug_TextView_data_bool" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

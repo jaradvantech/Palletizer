@@ -23,8 +23,8 @@
 
     <!-- Navigation Menu -->
     <string name="LineState">工位信息</string>
-    <string name="AlgorithmConfiguration">参数配置</string>
-    <string name="PalletEditor">托盘编辑</string>
+    <string name="PalletType"></string>
+    <string name="PalletCreator">托盘编辑</string>
     <string name="ProductionLogs">生产日志</string>
     <string name="Alarms">报警信息</string>
     <string name="ManualControl">手动</string>
@@ -53,6 +53,9 @@
     <!-- Logs -->
 
     <!-- Pallet Editor -->
+    <string name="Doyoureallywanttodeletethisitem">Do you really want to delete this object?</string>
+    <string name="invalidBoxSize">Invalid box size</string>
+
     <string name="Color">颜色</string>
     <string name="Grade">年级</string>
     <string name="Location">位置</string>
@@ -90,7 +93,7 @@
     <string name="brick_grade_6">年级 F</string>
     <string name="brick_grade_7">年级 G</string>
 
-    <!-- Algorithm Configuration-->
+    <!-- Configuration-->
     <string name="TypeToPackage">键入打包:</string>
     <string name="MatchTopCoef">匹配系数</string>
     <string name="SimilarityCoef">相似系数</string>

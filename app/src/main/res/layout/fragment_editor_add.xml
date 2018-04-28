@@ -1,0 +1,100 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.example.administrator.Palletizer.Editor">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/editor_imageView_pallet"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="#000000"
+            android:padding="3dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/box"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/add_editText_height"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.498" />
+
+        <EditText
+            android:id="@+id/add_editText_name"
+            android:layout_width="300dp"
+            android:layout_height="49dp"
+            android:layout_marginEnd="224dp"
+            android:layout_marginTop="168dp"
+            android:ems="10"
+            android:hint="Object Name"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/add_editText_width"
+            android:layout_width="300dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="Box Width"
+            android:inputType="number"
+            app:layout_constraintStart_toStartOf="@+id/add_editText_name"
+            app:layout_constraintTop_toBottomOf="@+id/add_editText_name" />
+
+        <EditText
+            android:id="@+id/add_editText_height"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:hint="Box Height"
+            android:inputType="number"
+            app:layout_constraintStart_toStartOf="@+id/add_editText_width"
+            app:layout_constraintTop_toBottomOf="@+id/add_editText_width" />
+
+        <Button
+            android:id="@+id/add_button_preview"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Preview"
+            app:layout_constraintStart_toStartOf="@+id/add_button_done"
+            app:layout_constraintTop_toBottomOf="@+id/add_button_done" />
+
+        <Button
+            android:id="@+id/add_button_done"
+            android:layout_width="300dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="16dp"
+            android:text="Done"
+            app:layout_constraintStart_toStartOf="@+id/add_editText_height"
+            app:layout_constraintTop_toBottomOf="@+id/add_editText_height" />
+
+        <TextView
+            android:id="@+id/add_textView_boxText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:text="Untitled Box (800x800)"
+            app:layout_constraintEnd_toEndOf="@+id/editor_imageView_pallet"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="@+id/editor_imageView_pallet"
+            app:layout_constraintTop_toBottomOf="@+id/editor_imageView_pallet" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

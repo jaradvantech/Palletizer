@@ -28,8 +28,8 @@
     <!-- Navigation Menu -->
     <string name="Loading">Loading</string>
     <string name="LineState">Line Status</string>
-    <string name="AlgorithmConfiguration">Algorithm configuration</string>
-    <string name="PalletEditor">Pallet editor</string>
+    <string name="PalletType">Pallet Type</string>
+    <string name="PalletCreator">Pallet Creator</string>
     <string name="ProductionLogs">Production logs</string>
     <string name="Alarms">Alarms</string>
     <string name="ManualControl">Manual control</string>
@@ -58,6 +58,10 @@
     <!-- Logs -->
 
     <!-- Pallet Editor -->
+
+    <string name="Doyoureallywanttodeletethisitem">Do you really want to delete this object?</string>
+    <string name="invalidBoxSize">Invalid box size</string>
+
     <string name="Color">Colour</string>
     <string name="Grade">Grade</string>
     <string name="Location">Location</string>
@@ -95,7 +99,7 @@
     <string name="brick_grade_6">Grade F</string>
     <string name="brick_grade_7">Grade G</string>
 
-    <!-- Algorithm Configuration-->
+    <!--Configuration-->
     <string name="TypeToPackage">Type to package:</string>
     <string name="MatchTopCoef">Match-top coefficient</string>
     <string name="SimilarityCoef">Similarity coefficient</string>

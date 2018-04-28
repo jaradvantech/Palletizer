@@ -43,19 +43,19 @@ public class AlarmListAdapter extends BaseAdapter {
 
         // Get title element
         TextView titleTextView =
-                (TextView) rowView.findViewById(R.id.recipe_list_title);
+                (TextView) rowView.findViewById(R.id.alarm_list_title);
 
         // Get subtitle element
         TextView subtitleTextView =
-                (TextView) rowView.findViewById(R.id.recipe_list_subtitle);
+                (TextView) rowView.findViewById(R.id.alarm_list_subtitle);
 
         // Get detail element
         TextView detailTextView =
-                (TextView) rowView.findViewById(R.id.recipe_list_detail);
+                (TextView) rowView.findViewById(R.id.alarm_list_detail);
 
         // Get thumbnail element
         ImageView thumbnailImageView =
-                (ImageView) rowView.findViewById(R.id.recipe_list_thumbnail);
+                (ImageView) rowView.findViewById(R.id.alarm_list_thumbnail);
 
         // 1
         AlarmObject mAlarm = (AlarmObject) getItem(position);

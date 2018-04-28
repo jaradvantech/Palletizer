@@ -7,16 +7,16 @@
         <item
             android:id="@+id/nav_lines"
             android:checked="false"
-            android:icon="@mipmap/conveyor"
+            android:icon="@mipmap/industry"
             android:title="@string/LineState" />
         <item
             android:id="@+id/nav_algorithm"
-            android:icon="@mipmap/color_wheel"
-            android:title="@string/AlgorithmConfiguration" />
+            android:icon="@mipmap/pallet_icon"
+            android:title="@string/PalletType" />
         <item
             android:id="@+id/nav_editor"
-            android:icon="@mipmap/layers"
-            android:title="@string/PalletEditor" />
+            android:icon="@mipmap/designer"
+            android:title="@string/PalletCreator" />
         <item
             android:id="@+id/nav_logs"
             android:icon="@mipmap/log_file_format"
@@ -39,19 +39,6 @@
             android:icon="@mipmap/settings"
             android:title="@string/Settings" />
     </group>
-    <!--
-    <item android:title="Other stuff">
-        <menu>
-            <item
-                android:id="@+id/nav_export"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Export data" />
-            <item
-                android:id="@+id/nav_wifi"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Connect Wi-Fi" />
-        </menu>
-    </item>
-    !-->
+
 
 </menu>

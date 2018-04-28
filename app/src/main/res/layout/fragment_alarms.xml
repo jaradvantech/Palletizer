@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context="com.example.administrator.Palletizer.Algorithm">
+    tools:context="com.example.administrator.Palletizer.Control">
 
     <!-- TODO: Update blank fragment layout -->
 

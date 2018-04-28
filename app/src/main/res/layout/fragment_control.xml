@@ -1,0 +1,85 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.example.administrator.Palletizer.Control">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/Apply"
+            android:layout_width="361dp"
+            android:layout_height="68dp"
+            android:text="Apply"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/control_ListView_designs"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.86" />
+
+        <ListView
+            android:id="@+id/control_ListView_designs"
+            android:layout_width="361dp"
+            android:layout_height="409dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.299" />
+
+        <TextView
+            android:id="@+id/control_textView_preview"
+            android:layout_width="wrap_content"
+            android:layout_height="41dp"
+            android:layout_marginBottom="8dp"
+            android:text="Preview design:"
+            android:textSize="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/control_relativeLayout_pallet"
+            app:layout_constraintStart_toStartOf="@+id/control_relativeLayout_pallet" />
+
+        <TextView
+            android:id="@+id/control_textView_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Select design:"
+            android:textSize="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/control_ListView_designs"
+            app:layout_constraintStart_toStartOf="@+id/control_ListView_designs" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="600dp"
+            android:layout_height="500dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="108dp"
+            android:background="#000000"
+            android:padding="3dp"
+            android:src="@mipmap/pallet_whitebg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.496" />
+
+        <RelativeLayout
+            android:id="@+id/control_relativeLayout_pallet"
+            android:layout_width="600dp"
+            android:layout_height="500dp"
+            android:layout_marginStart="572dp"
+            android:layout_marginTop="80dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </RelativeLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

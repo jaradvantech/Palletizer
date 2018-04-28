@@ -79,8 +79,8 @@ public class Settings extends Fragment {
         mFlippableStack.setAdapter(mPageAdapter);
 
         //Set fields to current saved values
-        String SERVER_IP = sharedPref.getString(getString(R.string.Stored_PC_IP_Address), null);
-        String SERVER_PORT = sharedPref.getString(getString(R.string.Stored_PC_IP_Port), null);
+        String SERVER_IP = sharedPref.getString(getString(R.string.Stored_PC_IP_Address), "192.168.0.180");
+        String SERVER_PORT = sharedPref.getString(getString(R.string.Stored_PC_IP_Port), "23623");
         String Server_IP_split[] = SERVER_IP.split("[.]+");
         editText_PC_IP_Address_1.setText(Server_IP_split[0]);
         editText_PC_IP_Address_2.setText(Server_IP_split[1]);

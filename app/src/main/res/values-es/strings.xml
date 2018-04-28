@@ -28,8 +28,8 @@
     <!-- Navigation Menu -->
     <string name="Loading">Cargando...</string>
     <string name="LineState">Estado de la línea</string>
-    <string name="AlgorithmConfiguration">Configuración del algoritmo</string>
-    <string name="PalletEditor">Editor de palets</string>
+    <string name="PalletType">Tipo de palet</string>
+    <string name="PalletCreator">Crear palet</string>
     <string name="ProductionLogs">Registro de producción</string>
     <string name="Alarms">Alarmas</string>
     <string name="ManualControl">Control Manual</string>
@@ -58,6 +58,10 @@
     <!-- Logs -->
 
     <!-- Pallet Editor -->
+
+    <string name="Doyoureallywanttodeletethisitem">Do you really want to delete this object?</string>
+    <string name="invalidBoxSize">Invalid box size</string>
+
     <string name="Color">Color</string>
     <string name="Grade">Grado</string>
     <string name="Location">Ubicación</string>
@@ -95,7 +99,7 @@
     <string name="brick_grade_6">Grado F</string>
     <string name="brick_grade_7">Grado G</string>
 
-    <!-- Algorithm Configuration-->
+    <!-- Configuration-->
     <string name="TypeToPackage">Tipo a empaquetar:</string>
     <string name="MatchTopCoef">Ponderación de encajar el top</string>
     <string name="SimilarityCoef">Ponderación de número de iguales</string>

@@ -38,11 +38,12 @@ import static com.example.administrator.Palletizer.Commands.RPRV;
 public class MainActivity extends AppCompatActivity
         implements
         Line.OnFragmentInteractionListener,
-        Algorithm.OnFragmentInteractionListener,
+        Control.OnFragmentInteractionListener,
         Editor.OnFragmentInteractionListener,
+        Editor_add.OnFragmentInteractionListener,
         Manual.OnFragmentInteractionListener,
         Debug.OnFragmentInteractionListener,
-        Debug_Write.OnFragmentInteractionListener,
+        DebugWrite.OnFragmentInteractionListener,
         Alarms.OnFragmentInteractionListener,
         NavigationView.OnNavigationItemSelectedListener {
 
@@ -50,12 +51,13 @@ public class MainActivity extends AppCompatActivity
     TcpClient mTcpClient;
     Boolean FirstTimeRPRV =true;
     Line line = new Line();
-    Algorithm algorithm = new Algorithm();
+    Control algorithm = new Control();
     Editor editor = new Editor();
+    Editor_add editor_add = new Editor_add();
     Logs logs = new Logs();
     Manual manual = new Manual();
     Debug debug = new Debug();
-    Debug_Write debug_write = new Debug_Write();
+    DebugWrite debug_write = new DebugWrite();
     Settings settings = new Settings();
     Loading loading = new Loading();
     Alarms alarms = new Alarms();
@@ -133,6 +135,7 @@ public class MainActivity extends AppCompatActivity
         manager.beginTransaction().replace(R.id.holder_line, line, line.getTag()).commit();
         manager.beginTransaction().replace(R.id.holder_algorithm, algorithm, algorithm.getTag()).commit();
         manager.beginTransaction().replace(R.id.holder_editor, editor, editor.getTag()).commit();
+        manager.beginTransaction().replace(R.id.holder_editor_add, editor_add, editor_add.getTag()).commit();
         manager.beginTransaction().replace(R.id.holder_logs, logs, logs.getTag()).commit();
         manager.beginTransaction().replace(R.id.holder_manual, manual, manual.getTag()).commit();
         manager.beginTransaction().replace(R.id.holder_debug, debug, debug.getTag()).commit();
@@ -177,13 +180,11 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
 
-            //Otherwise:
         } else {
-            //If we are in debug write screen (special case)
-            if(previous_id == R.id.opt_debug_write) {
-                //Go to previous debug screen
-                switchToLayout(R.id.nav_debug);
-            }
+            //If in sub-screen, return to main screen
+            if(previous_id == R.id.opt_debug_write) switchToLayout(R.id.nav_debug);
+            if(previous_id == R.id.opt_editor_add) switchToLayout(R.id.nav_editor);
+
             //Otherwise go to line
             else {
                 switchToLayout(R.id.nav_lines);
@@ -250,6 +251,11 @@ public class MainActivity extends AppCompatActivity
          */
         if(previous_id == R.id.nav_settings) settings.saveSettings();
 
+        /*
+         * Update the list of palletizable objects in case something was added.
+         */
+        if(previous_id == R.id.opt_editor_add) editor.refreshObjectList();
+
         //Select layouts to change
         ConstraintLayout new_layout = getLayoutByID(new_id);
         ConstraintLayout previous_layout = getLayoutByID(previous_id);
@@ -276,6 +282,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_editor:
                 retLayout = (ConstraintLayout) this.findViewById(R.id.holder_editor);
+                break;
+            case R.id.opt_editor_add:
+                retLayout = (ConstraintLayout) this.findViewById(R.id.holder_editor_add);
                 break;
             case R.id.nav_logs:
                 retLayout = (ConstraintLayout) this.findViewById(R.id.holder_logs);
@@ -323,10 +332,10 @@ public class MainActivity extends AppCompatActivity
                 title.setText(getResources().getString(R.string.LineState));
                 break;
             case R.id.nav_algorithm:
-                title.setText(getResources().getString(R.string.AlgorithmConfiguration));
+                title.setText(getResources().getString(R.string.PalletType));
                 break;
             case R.id.nav_editor:
-                title.setText(getResources().getString(R.string.PalletEditor));
+                title.setText(getResources().getString(R.string.PalletCreator));
                 break;
             case R.id.nav_logs:
                 title.setText(getResources().getString(R.string.ProductionLogs));
@@ -555,11 +564,11 @@ public class MainActivity extends AppCompatActivity
          */
         Menu mainMenu = navigationView.getMenu();
         mainMenu.findItem(R.id.nav_alarms).setTitle(getString(R.string.Alarms));
-        mainMenu.findItem(R.id.nav_algorithm).setTitle(getString(R.string.AlgorithmConfiguration));
+        mainMenu.findItem(R.id.nav_algorithm).setTitle(getString(R.string.PalletType));
         mainMenu.findItem(R.id.nav_debug).setTitle(getString(R.string.Debug));
         mainMenu.findItem(R.id.nav_lines).setTitle(getString(R.string.LineState));
         mainMenu.findItem(R.id.nav_settings).setTitle(getString(R.string.Settings));
-        mainMenu.findItem(R.id.nav_editor).setTitle(getString(R.string.PalletEditor));
+        mainMenu.findItem(R.id.nav_editor).setTitle(getString(R.string.PalletCreator));
         mainMenu.findItem(R.id.nav_logs).setTitle(getString(R.string.ProductionLogs));
         mainMenu.findItem(R.id.nav_manual).setTitle(getString(R.string.ManualControl));
     }

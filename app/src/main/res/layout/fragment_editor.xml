@@ -12,5 +12,184 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/editor_imageView_pallet"
+            android:layout_width="600px"
+            android:layout_height="500px"
+            android:layout_marginStart="320dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/pallet"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.361" />
+
+        <ImageView
+            android:id="@+id/editor_imageView_sideBackground"
+            android:layout_width="299dp"
+            android:layout_height="722dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/side_menu_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <SeekBar
+            android:id="@+id/editor_seekBar_xaxis"
+            style="@style/CustomSliderBar"
+            android:layout_width="635dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:splitTrack="false"
+            app:layout_constraintEnd_toEndOf="@+id/editor_imageView_pallet"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/editor_imageView_pallet"
+            app:layout_constraintTop_toBottomOf="@+id/editor_imageView_pallet" />
+
+        <SeekBar
+            android:id="@+id/editor_seekBar_yaxis"
+            style="@style/CustomSliderBar"
+            android:layout_width="540dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="354dp"
+            android:rotation="270"
+            android:splitTrack="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/editor_imageView_pallet"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.47" />
+
+        <ListView
+            android:id="@+id/editor_listView_items"
+            android:layout_width="231dp"
+            android:layout_height="620dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/editor_imageView_sideBackground"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/editor_imageView_sideBackground"
+            app:layout_constraintTop_toTopOf="@+id/editor_imageView_sideBackground"
+            app:layout_constraintVertical_bias="0.384" />
+
+        <Button
+            android:id="@+id/editor_button_add"
+            android:layout_width="220dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="108dp"
+            android:text="ADD STEP"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/editor_button_remove"
+            android:layout_width="220dp"
+            android:layout_height="52dp"
+            android:text="REMOVE STEP"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="@+id/editor_button_add"
+            app:layout_constraintTop_toBottomOf="@+id/editor_button_add" />
+
+        <Button
+            android:id="@+id/editor_button_edit"
+            android:layout_width="220dp"
+            android:layout_height="52dp"
+            android:text="EDIT STEP"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="@+id/editor_button_remove"
+            app:layout_constraintTop_toBottomOf="@+id/editor_button_remove" />
+
+        <ImageView
+            android:id="@+id/editor_imageView_prev"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@mipmap/arrowhead_left"
+            android:backgroundTint="@color/colorSecondary"
+            android:clickable="true"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="@+id/editor_textView_steps"
+            app:layout_constraintEnd_toStartOf="@+id/editor_textView_steps"
+            app:layout_constraintTop_toTopOf="@+id/editor_textView_steps"
+            app:layout_constraintVertical_bias="0.611" />
+
+        <ImageView
+            android:id="@+id/editor_imageView_next"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@mipmap/arrowhead_right"
+            android:backgroundTint="@color/colorSecondary"
+            android:clickable="true"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="@+id/editor_textView_steps"
+            app:layout_constraintStart_toEndOf="@+id/editor_textView_steps"
+            app:layout_constraintTop_toTopOf="@+id/editor_textView_steps"
+            app:layout_constraintVertical_bias="0.611" />
+
+        <TextView
+            android:id="@+id/editor_textView_steps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="1/32"
+            android:textColor="@color/colorPrimary"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/editor_button_add"
+            app:layout_constraintEnd_toEndOf="@+id/editor_button_add"
+            app:layout_constraintStart_toStartOf="@+id/editor_button_add" />
+
+        <ImageButton
+            android:id="@+id/editor_button_confirmStep"
+            android:layout_width="220dp"
+            android:layout_height="83dp"
+            android:layout_marginTop="16dp"
+            android:elevation="0dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/tick"
+            app:layout_constraintStart_toStartOf="@+id/editor_textView_info"
+            app:layout_constraintTop_toBottomOf="@+id/editor_imageView_rotateLeft" />
+
+        <TextView
+            android:id="@+id/editor_textView_info"
+            android:layout_width="210dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="16dp"
+            android:text="X: 0cm\nY: 0cm\nZ: 0cm\nW: 0deg\n"
+            app:layout_constraintStart_toStartOf="@+id/editor_button_edit"
+            app:layout_constraintTop_toBottomOf="@+id/editor_button_edit" />
+
+        <ImageView
+            android:id="@+id/editor_imageView_rotateLeft"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="16dp"
+            android:src="@mipmap/rotate_right"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editor_textView_info" />
+
+        <ImageView
+            android:id="@+id/editor_imageview_rotateRight"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="16dp"
+            android:src="@mipmap/rotate_left"
+            app:layout_constraintStart_toEndOf="@+id/editor_imageView_rotateLeft"
+            app:layout_constraintTop_toBottomOf="@+id/editor_textView_info" />
+
     </android.support.constraint.ConstraintLayout>
+
 </FrameLayout>

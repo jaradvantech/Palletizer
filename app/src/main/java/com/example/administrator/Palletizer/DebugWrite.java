@@ -13,7 +13,7 @@ import android.widget.EditText;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Debug_Write extends Fragment {
+public class DebugWrite extends Fragment {
 
     private OnFragmentInteractionListener mFragmentInteraction;
     private View thisView;
@@ -69,7 +69,7 @@ public class Debug_Write extends Fragment {
     private EditText  CommunicationExchange;
 
 
-    public Debug_Write() {
+    public DebugWrite() {
     }
 
     @Override
@@ -116,55 +116,104 @@ public class Debug_Write extends Fragment {
 
         try {
             JSONoutput.put("command_ID", "PWDA");
-            JSONoutput.put("SystemState", inputToInteger(SystemState));
-            JSONoutput.put("XAxisSetting", inputToInteger(XAxisSetting));
-            JSONoutput.put("YAxisSetting", inputToInteger(YAxisSetting));
-            JSONoutput.put("ZAxisSetting", inputToInteger(ZAxisSetting));
-            JSONoutput.put("WAxisSetting", inputToInteger(WAxisSetting));
-            JSONoutput.put("FingerMovement", inputToInteger(FingerMovement));
-            JSONoutput.put("OuterClawMovement", inputToInteger(OuterClawMovement));
-            JSONoutput.put("LocationRollingOver", inputToInteger(LocationRollingOver));
-            JSONoutput.put("TheSpeedOfXAxis", inputToInteger(TheSpeedOfXAxis));
-            JSONoutput.put("TheSpeedOfYAxis", inputToInteger(TheSpeedOfYAxis));
-            JSONoutput.put("TheSpeedOfZAxis", inputToInteger(TheSpeedOfZAxis));
-            JSONoutput.put("TheSpeedOfWAxis", inputToInteger(TheSpeedOfWAxis));
-            JSONoutput.put("OverRunAlarm", inputToInteger(OverRunAlarm));
-            JSONoutput.put("HostComputerControlTheSpeedOfXAxis", inputToInteger(HostComputerControlTheSpeedOfXAxis));
-            JSONoutput.put("AlarmAndStop", inputToInteger(AlarmAndStop));
-            JSONoutput.put("ManualControlOfScreen", inputToInteger(ManualControlOfScreen));
-            JSONoutput.put("ManualControlTheXAxisOfTheScreen", inputToInteger(ManualControlTheXAxisOfTheScreen));
-            JSONoutput.put("ManualControlTheYAxisOfTheScreen", inputToInteger(ManualControlTheYAxisOfTheScreen));
-            JSONoutput.put("ManualControlTheZAxisOfTheScreen", inputToInteger(ManualControlTheZAxisOfTheScreen));
-            JSONoutput.put("ManualControlTheWAxisOfTheScreen", inputToInteger(ManualControlTheWAxisOfTheScreen));
-            JSONoutput.put("ManualControlTheFingerOfTheScreen", inputToInteger(ManualControlTheFingerOfTheScreen));
-            JSONoutput.put("ManualControlTheOuterClawOfTheScreen", inputToInteger(ManualControlTheOuterClawOfTheScreen));
-            JSONoutput.put("StorageBinFullA", inputToInteger(StorageBinFullA));
-            JSONoutput.put("StorageBinFullB", inputToInteger(StorageBinFullB));
-            JSONoutput.put("TheTimeOfTheOuterClawHalfOpen", inputToInteger(TheTimeOfTheOuterClawHalfOpen));
-            JSONoutput.put("WipeDataOfTheChangeTileAndStorageBinFull", inputToInteger(WipeDataOfTheChangeTileAndStorageBinFull));
-            JSONoutput.put("NearALowSpeed", inputToInteger(NearALowSpeed));
-            JSONoutput.put("TheNumberOfPackages", inputToInteger(TheNumberOfPackages));
-            JSONoutput.put("TheHighestSpeedOfXAxis", inputToInteger(TheHighestSpeedOfXAxis));
-            JSONoutput.put("DecelerationTimeOfXAxis", inputToInteger(DecelerationTimeOfXAxis));
-            JSONoutput.put("DecelerationDistanceOfXAxis", inputToInteger(DecelerationDistanceOfXAxis));
-            JSONoutput.put("NoLoadTimeOfXAxis", inputToInteger(NoLoadTimeOfXAxis));
-            JSONoutput.put("NoLoadDistanceOfXAxis", inputToInteger(NoLoadDistanceOfXAxis));
-            JSONoutput.put("ManualSpeedOfXAxis", inputToInteger(ManualSpeedOfXAxis));
-            JSONoutput.put("TheHighestSpeedOfYAxis", inputToInteger(TheHighestSpeedOfYAxis));
-            JSONoutput.put("DecelerationTimeOfYAxis", inputToInteger(DecelerationTimeOfYAxis));
-            JSONoutput.put("DecelerationDistanceOfYAxis", inputToInteger(DecelerationDistanceOfYAxis));
-            JSONoutput.put("NoLoadTimeOfYAxis", inputToInteger(NoLoadTimeOfYAxis));
-            JSONoutput.put("NoLoadDistanceOfYAxis", inputToInteger(NoLoadDistanceOfYAxis));
-            JSONoutput.put("ManualSpeedOfYAxis", inputToInteger(ManualSpeedOfYAxis));
-            JSONoutput.put("TheHighestSpeedOfZAxis", inputToInteger(TheHighestSpeedOfZAxis));
-            JSONoutput.put("DecelerationTimeOfZAxis", inputToInteger(DecelerationTimeOfZAxis));
-            JSONoutput.put("DecelerationDistaceOfZAxis", inputToInteger(DecelerationDistaceOfZAxis));
-            JSONoutput.put("ManualSpeedOfZAxis", inputToInteger(ManualSpeedOfZAxis));
-            JSONoutput.put("TheAccuracyOfXAxis", inputToInteger(TheAccuracyOfXAxis));
-            JSONoutput.put("TheAccuracyOfYAxis", inputToInteger(TheAccuracyOfYAxis));
-            JSONoutput.put("TheAccuracyOfZAxis", inputToInteger(TheAccuracyOfZAxis));
-            JSONoutput.put("TheAccuracyOfWAxis", inputToInteger(TheAccuracyOfWAxis));
-            JSONoutput.put("CommunicationExchange", inputToInteger(CommunicationExchange));
+            if(isNotEmpty(SystemState))
+                JSONoutput.put("SystemState", inputToInteger(SystemState));
+            if(isNotEmpty(XAxisSetting))
+                JSONoutput.put("XAxisSetting", inputToInteger(XAxisSetting));
+            if(isNotEmpty(YAxisSetting))
+                JSONoutput.put("YAxisSetting", inputToInteger(YAxisSetting));
+            if(isNotEmpty(ZAxisSetting))
+                JSONoutput.put("ZAxisSetting", inputToInteger(ZAxisSetting));
+            if(isNotEmpty(WAxisSetting))
+                JSONoutput.put("WAxisSetting", inputToInteger(WAxisSetting));
+            if(isNotEmpty(FingerMovement))
+                JSONoutput.put("FingerMovement", inputToInteger(FingerMovement));
+            if(isNotEmpty(OuterClawMovement))
+                JSONoutput.put("OuterClawMovement", inputToInteger(OuterClawMovement));
+            if(isNotEmpty(LocationRollingOver))
+                JSONoutput.put("LocationRollingOver", inputToInteger(LocationRollingOver));
+            if(isNotEmpty(TheSpeedOfXAxis))
+                JSONoutput.put("TheSpeedOfXAxis", inputToInteger(TheSpeedOfXAxis));
+            if(isNotEmpty(TheSpeedOfYAxis))
+                JSONoutput.put("TheSpeedOfYAxis", inputToInteger(TheSpeedOfYAxis));
+            if(isNotEmpty(TheSpeedOfZAxis))
+                JSONoutput.put("TheSpeedOfZAxis", inputToInteger(TheSpeedOfZAxis));
+            if(isNotEmpty(TheSpeedOfWAxis))
+                JSONoutput.put("TheSpeedOfWAxis", inputToInteger(TheSpeedOfWAxis));
+            if(isNotEmpty(OverRunAlarm))
+                JSONoutput.put("OverRunAlarm", inputToInteger(OverRunAlarm));
+            if(isNotEmpty(HostComputerControlTheSpeedOfXAxis))
+                JSONoutput.put("HostComputerControlTheSpeedOfXAxis", inputToInteger(HostComputerControlTheSpeedOfXAxis));
+            if(isNotEmpty(AlarmAndStop))
+                JSONoutput.put("AlarmAndStop", inputToInteger(AlarmAndStop));
+            if(isNotEmpty(ManualControlOfScreen))
+                JSONoutput.put("ManualControlOfScreen", inputToInteger(ManualControlOfScreen));
+            if(isNotEmpty(ManualControlTheXAxisOfTheScreen))
+                JSONoutput.put("ManualControlTheXAxisOfTheScreen", inputToInteger(ManualControlTheXAxisOfTheScreen));
+            if(isNotEmpty(ManualControlTheYAxisOfTheScreen))
+                JSONoutput.put("ManualControlTheYAxisOfTheScreen", inputToInteger(ManualControlTheYAxisOfTheScreen));
+            if(isNotEmpty(ManualControlTheZAxisOfTheScreen))
+                JSONoutput.put("ManualControlTheZAxisOfTheScreen", inputToInteger(ManualControlTheZAxisOfTheScreen));
+            if(isNotEmpty(ManualControlTheWAxisOfTheScreen))
+                JSONoutput.put("ManualControlTheWAxisOfTheScreen", inputToInteger(ManualControlTheWAxisOfTheScreen));
+            if(isNotEmpty(ManualControlTheFingerOfTheScreen))
+                JSONoutput.put("ManualControlTheFingerOfTheScreen", inputToInteger(ManualControlTheFingerOfTheScreen));
+            if(isNotEmpty(ManualControlTheOuterClawOfTheScreen))
+                JSONoutput.put("ManualControlTheOuterClawOfTheScreen", inputToInteger(ManualControlTheOuterClawOfTheScreen));
+            if(isNotEmpty(StorageBinFullA))
+                JSONoutput.put("StorageBinFullA", inputToInteger(StorageBinFullA));
+            if(isNotEmpty(StorageBinFullB))
+                JSONoutput.put("StorageBinFullB", inputToInteger(StorageBinFullB));
+            if(isNotEmpty(TheTimeOfTheOuterClawHalfOpen))
+                JSONoutput.put("TheTimeOfTheOuterClawHalfOpen", inputToInteger(TheTimeOfTheOuterClawHalfOpen));
+            if(isNotEmpty(WipeDataOfTheChangeTileAndStorageBinFull))
+                JSONoutput.put("WipeDataOfTheChangeTileAndStorageBinFull", inputToInteger(WipeDataOfTheChangeTileAndStorageBinFull));
+            if(isNotEmpty(NearALowSpeed))
+                JSONoutput.put("NearALowSpeed", inputToInteger(NearALowSpeed));
+            if(isNotEmpty(TheNumberOfPackages))
+                JSONoutput.put("TheNumberOfPackages", inputToInteger(TheNumberOfPackages));
+            if(isNotEmpty(TheHighestSpeedOfXAxis))
+                JSONoutput.put("TheHighestSpeedOfXAxis", inputToInteger(TheHighestSpeedOfXAxis));
+            if(isNotEmpty(DecelerationTimeOfXAxis))
+                JSONoutput.put("DecelerationTimeOfXAxis", inputToInteger(DecelerationTimeOfXAxis));
+            if(isNotEmpty(DecelerationDistanceOfXAxis))
+                JSONoutput.put("DecelerationDistanceOfXAxis", inputToInteger(DecelerationDistanceOfXAxis));
+            if(isNotEmpty(NoLoadTimeOfXAxis))
+                JSONoutput.put("NoLoadTimeOfXAxis", inputToInteger(NoLoadTimeOfXAxis));
+            if(isNotEmpty(NoLoadDistanceOfXAxis))
+                JSONoutput.put("NoLoadDistanceOfXAxis", inputToInteger(NoLoadDistanceOfXAxis));
+            if(isNotEmpty(ManualSpeedOfXAxis))
+                JSONoutput.put("ManualSpeedOfXAxis", inputToInteger(ManualSpeedOfXAxis));
+            if(isNotEmpty(TheHighestSpeedOfYAxis))
+                JSONoutput.put("TheHighestSpeedOfYAxis", inputToInteger(TheHighestSpeedOfYAxis));
+            if(isNotEmpty(DecelerationTimeOfYAxis))
+                JSONoutput.put("DecelerationTimeOfYAxis", inputToInteger(DecelerationTimeOfYAxis));
+            if(isNotEmpty(DecelerationDistanceOfYAxis))
+                JSONoutput.put("DecelerationDistanceOfYAxis", inputToInteger(DecelerationDistanceOfYAxis));
+            if(isNotEmpty(NoLoadTimeOfYAxis))
+                JSONoutput.put("NoLoadTimeOfYAxis", inputToInteger(NoLoadTimeOfYAxis));
+            if(isNotEmpty(NoLoadDistanceOfYAxis))
+                JSONoutput.put("NoLoadDistanceOfYAxis", inputToInteger(NoLoadDistanceOfYAxis));
+            if(isNotEmpty(ManualSpeedOfYAxis))
+                JSONoutput.put("ManualSpeedOfYAxis", inputToInteger(ManualSpeedOfYAxis));
+            if(isNotEmpty(TheHighestSpeedOfZAxis))
+                JSONoutput.put("TheHighestSpeedOfZAxis", inputToInteger(TheHighestSpeedOfZAxis));
+            if(isNotEmpty(DecelerationTimeOfZAxis))
+                JSONoutput.put("DecelerationTimeOfZAxis", inputToInteger(DecelerationTimeOfZAxis));
+            if(isNotEmpty(DecelerationDistaceOfZAxis))
+                JSONoutput.put("DecelerationDistaceOfZAxis", inputToInteger(DecelerationDistaceOfZAxis));
+            if(isNotEmpty(ManualSpeedOfZAxis))
+                JSONoutput.put("ManualSpeedOfZAxis", inputToInteger(ManualSpeedOfZAxis));
+            if(isNotEmpty(TheAccuracyOfXAxis))
+                JSONoutput.put("TheAccuracyOfXAxis", inputToInteger(TheAccuracyOfXAxis));
+            if(isNotEmpty(TheAccuracyOfYAxis))
+                JSONoutput.put("TheAccuracyOfYAxis", inputToInteger(TheAccuracyOfYAxis));
+            if(isNotEmpty(TheAccuracyOfZAxis))
+                JSONoutput.put("TheAccuracyOfZAxis", inputToInteger(TheAccuracyOfZAxis));
+            if(isNotEmpty(TheAccuracyOfWAxis))
+                JSONoutput.put("TheAccuracyOfWAxis", inputToInteger(TheAccuracyOfWAxis));
+            if(isNotEmpty(CommunicationExchange))
+                JSONoutput.put("CommunicationExchange", inputToInteger(CommunicationExchange));
 
         } catch(JSONException exc) {
             Log.d("JSON exception", "Error generating PWDA");
@@ -180,14 +229,16 @@ public class Debug_Write extends Fragment {
     /*
      *RBS: Read number from input and convert to properly formatted String
      */
-    int inputToInteger(EditText mUserInput) {
+    private int inputToInteger(EditText mUserInput) {
         //Get int from input
         String inputText = mUserInput.getText().toString();
-        //default is zero
-        if(TextUtils.isEmpty(inputText))
-            inputText = "0";
         return Integer.parseInt(inputText);
     }
+
+    public boolean isNotEmpty(EditText mUserInput) {
+        return !mUserInput.getText().toString().equals("");
+    }
+
 
     private void loadUIEelements() {
          SystemState = (EditText) thisView.findViewById(R.id.SystemState);

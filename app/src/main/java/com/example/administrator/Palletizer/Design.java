@@ -2,6 +2,8 @@ package com.example.administrator.Palletizer;
 
 import java.util.ArrayList;
 
+import javax.crypto.Cipher;
+
 public class Design {
 
     /*
@@ -10,8 +12,7 @@ public class Design {
      */
     private int type;
     private String name;
-    private ArrayList<Coord> steps;
-    private ArrayList<Box> boxList;
+    public ArrayList<Box> boxList;
 
     Design(){
     }
@@ -29,10 +30,6 @@ public class Design {
         this.name = name;
     }
 
-    public void setSteps(ArrayList<Coord> steps) {
-        this.steps = steps;
-    }
-
     public int getType() {
         return type;
     }
@@ -42,6 +39,11 @@ public class Design {
     }
 
     public ArrayList<Coord> getSteps() {
+        ArrayList<Coord> steps = new ArrayList<Coord>();
+        int listSize = boxList.size();
+        for(int i=0; i<listSize; i++) {
+            steps.add(boxList.get(i).coords);
+        }
         return steps;
     }
 }

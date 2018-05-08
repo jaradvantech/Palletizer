@@ -75,12 +75,12 @@
             app:layout_constraintVertical_bias="0.384" />
 
         <Button
-            android:id="@+id/editor_button_add"
+            android:id="@+id/editor_button_new"
             android:layout_width="220dp"
             android:layout_height="52dp"
             android:layout_marginStart="40dp"
             android:layout_marginTop="108dp"
-            android:text="ADD STEP"
+            android:text="NEW DESIGN"
             android:textSize="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -91,8 +91,8 @@
             android:layout_height="52dp"
             android:text="REMOVE STEP"
             android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="@+id/editor_button_add"
-            app:layout_constraintTop_toBottomOf="@+id/editor_button_add" />
+            app:layout_constraintStart_toStartOf="@+id/editor_button_new"
+            app:layout_constraintTop_toBottomOf="@+id/editor_button_new" />
 
         <Button
             android:id="@+id/editor_button_edit"
@@ -146,9 +146,9 @@
             android:textColor="@color/colorPrimary"
             android:textSize="48sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/editor_button_add"
-            app:layout_constraintEnd_toEndOf="@+id/editor_button_add"
-            app:layout_constraintStart_toStartOf="@+id/editor_button_add" />
+            app:layout_constraintBottom_toTopOf="@+id/editor_button_new"
+            app:layout_constraintEnd_toEndOf="@+id/editor_button_new"
+            app:layout_constraintStart_toStartOf="@+id/editor_button_new" />
 
         <ImageButton
             android:id="@+id/editor_button_confirmStep"

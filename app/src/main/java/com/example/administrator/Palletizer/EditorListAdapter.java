@@ -13,9 +13,9 @@ import java.util.ArrayList;
 public class EditorListAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
-    private ArrayList<EditorObject> mDataSource;
+    private ArrayList<BoxPrototype> mDataSource;
 
-    public EditorListAdapter(Context context, ArrayList<EditorObject> items) {
+    public EditorListAdapter(Context context, ArrayList<BoxPrototype> items) {
         mContext = context;
         mDataSource = items;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -44,8 +44,8 @@ public class EditorListAdapter extends BaseAdapter {
 
         ImageView thumbnailImageView = (ImageView) rowView.findViewById(R.id.editor_list_image);
 
-        EditorObject mObject = (EditorObject) getItem(position);
-        thumbnailImageView.setImageResource(mObject.getImageResource());
+        BoxPrototype mObject = (BoxPrototype) getItem(position);
+        thumbnailImageView.setImageResource(mObject.textureResource);
 
         return rowView;
     }

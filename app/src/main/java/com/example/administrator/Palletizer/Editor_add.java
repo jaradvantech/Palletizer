@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class Editor_add extends Fragment {
     private final int MAXLENGTH = 1200;
     private final int MINWIDTH = 3;
     private final int MINLENGTH = 3;
-    private ArrayList<EditorObject> listOfCustomBoxes;
+    private ArrayList<BoxPrototype> listOfCustomBoxes;
     private Gson gson;
     private SharedPreferences sharedPref;
     private AlertDialog.Builder saveBuilder;
@@ -76,6 +77,9 @@ public class Editor_add extends Fragment {
         overwriteBuilder = new AlertDialog.Builder(getActivity());
         gson = new Gson();
         sharedPref = getActivity().getSharedPreferences("CUSTOMBOXES", Context.MODE_PRIVATE);
+
+        //First step is loading the previous items
+        loadObjectList();
 
 
         /*****************************************************
@@ -242,7 +246,7 @@ public class Editor_add extends Fragment {
             } else {
 
                  /*Create new object*/
-                EditorObject newCustomBox = new EditorObject(boxName, x, y, R.mipmap.box);
+                BoxPrototype newCustomBox = new BoxPrototype(boxName, x, y, R.mipmap.box);
 
                 /*Add new object to list*/
                 listOfCustomBoxes.add(newCustomBox);
@@ -272,12 +276,22 @@ public class Editor_add extends Fragment {
   */
 
     public void loadObjectList() {
+        Log.d("GSON", "trying to load object list");
         String jsonPreferences = sharedPref.getString("CUSTOMBOXES", "");
-        Type type = new TypeToken<List<EditorObject>>() {}.getType();
+
+        //Debugonly
+        Log.d("JSON", jsonPreferences);
+
+        Type type = new TypeToken<List<BoxPrototype>>() {}.getType();
         listOfCustomBoxes = gson.fromJson(jsonPreferences, type);
+        if(listOfCustomBoxes == null) {
+            Log.d("GSON", "No previously saved objects found");
+            listOfCustomBoxes = new ArrayList<BoxPrototype>();
+        }
     }
 
     public void saveObjectList() {
+        Log.d("GSON", "trying to save object list");
         SharedPreferences.Editor editor = sharedPref.edit();
         String serializedObjects = gson.toJson(listOfCustomBoxes);
         editor.putString("CUSTOMBOXES", serializedObjects);
@@ -287,7 +301,7 @@ public class Editor_add extends Fragment {
     private boolean objectExists() {
         boolean exists = false;
         if(listOfCustomBoxes != null) {
-            exists = listOfCustomBoxes.contains(new EditorObject(boxName, 0,0,0));
+            exists = listOfCustomBoxes.contains(new BoxPrototype(boxName, 0,0,0));
         }
         return exists;
     }

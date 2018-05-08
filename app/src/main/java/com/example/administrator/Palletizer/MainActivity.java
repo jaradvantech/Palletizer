@@ -313,9 +313,12 @@ public class MainActivity extends AppCompatActivity
         newLayout.setVisibility(ConstraintLayout.VISIBLE);
         oldLayout.setVisibility(ConstraintLayout.VISIBLE);
 
+        int oldLayoutFinalPosition = -oldLayout.getWidth();
+        int newLayoutFinalPosition =  newLayout.getWidth() + 100;
+
         //Prepare animations
-        ObjectAnimator oldAnimation_x = ObjectAnimator.ofFloat(oldLayout, "x", 0, -oldLayout.getWidth());
-        ObjectAnimator newAnimation_x = ObjectAnimator.ofFloat(newLayout, "x", newLayout.getWidth() + 100, 0);
+        ObjectAnimator oldAnimation_x = ObjectAnimator.ofFloat(oldLayout, "x", 0, oldLayoutFinalPosition);
+        ObjectAnimator newAnimation_x = ObjectAnimator.ofFloat(newLayout, "x", newLayoutFinalPosition, 0);
         ObjectAnimator oldAnimation_alpha = ObjectAnimator.ofFloat(oldLayout, "alpha", 0);
         ObjectAnimator newAnimation_alpha = ObjectAnimator.ofFloat(newLayout, "alpha", 1);
 

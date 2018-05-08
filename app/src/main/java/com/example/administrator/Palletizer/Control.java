@@ -106,12 +106,12 @@ public class Control extends Fragment {
     private void addOnTheFly(Box boxToAdd){
         //Dynamically create ImageView
         ImageView boxImage = new ImageView(getActivity());
-        boxImage.setImageResource(boxToAdd.getTextureResource());
+        boxImage.setImageResource(boxToAdd.textureResource);
 
         //Set size
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(boxToAdd.getHeight(), boxToAdd.getWidth());
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(boxToAdd.height, boxToAdd.width);
         //Set position
-        params.setMargins(boxToAdd.getCoords().getX(), boxToAdd.getCoords().getY() ,0,0);
+        params.setMargins(boxToAdd.coords.x, boxToAdd.coords.y,0,0);
         //Apply parameters to ImageView
         boxImage.setLayoutParams(params);
 

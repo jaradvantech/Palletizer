@@ -15,6 +15,7 @@ public class Design {
     public ArrayList<Box> boxList;
 
     Design(){
+        boxList = new ArrayList<Box>();
     }
 
     public Design(int type, String name) {

@@ -7,20 +7,9 @@ package com.example.administrator.Palletizer;
 public class Box extends BoxPrototype{
     public Coord coords;
 
-    public Box() {
-
-    }
-
     public Box(Coord coords, int width, int height, int textureResource) {
         super(width, height, textureResource);
         this.coords = coords;
-    }
-
-    /*
-     *  Another constructor without specifying coords
-     */
-    public Box(int width, int height, int textureResource) {
-        super(width, height, textureResource);
     }
 
 }

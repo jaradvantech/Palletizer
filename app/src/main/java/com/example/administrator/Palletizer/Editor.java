@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -58,8 +60,21 @@ public class Editor extends Fragment {
     private ArrayList<Box> palletBoxes;
     private ListView editorListView;
     private View view;
-    private final int DEFAULT_X = 500;
-    private final int DEFAULT_Y = 500;
+
+
+    /*
+     * Pallet is 120*100cm in real life, here is 600px*500px, so;
+     * 1 cm = 5px
+     * 1 px = 0.2cm
+     */
+    private final int WIDTH_PX = 600;
+    private final int HEIGHT_PX = 500;
+    private final int WIDTH_CM = 120;
+    private final int HEIGHT_CM = 100;
+    private final float CMTOPX = 5f;
+    private final float PXTOCM = 0.2f;
+    private final int DEFAULT_X = 0;
+    private final int DEFAULT_Y = 0;
 
     public Editor() {
     }
@@ -140,16 +155,14 @@ public class Editor extends Fragment {
     private void addElementToPallet(BoxPrototype protoType) {
         if(designBeingEdited != null) {
             //TODO create box from box prototype
-            Box newBox = new Box(protoType.width, protoType.height, protoType.textureResource);
+            Box newBox = new Box(new Coord(0,0,0,0), protoType.width, protoType.height, protoType.textureResource);
 
             //Add box to design
             designBeingEdited.boxList.add(newBox);
 
 
-            //now the box being edited is the last one
-            stepBeingEdited = designBeingEdited.boxList.size();
-
-            //TODO update display text
+            //Now the box being edited is the last one
+            changeSelectedStep(designBeingEdited.boxList.size()-1);
 
             //Now, create an image that represents the aforementioned box
             addNewBoxToPallet(newBox);
@@ -168,8 +181,8 @@ public class Editor extends Fragment {
 
     private void saveDesign() {
         //Read prefs
-        //Add object to list
-        //save prefs
+        //        //Add object to list
+        //        //save prefs
         startNewDesign();
     }
     
@@ -185,10 +198,12 @@ public class Editor extends Fragment {
 
         //Set size
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(boxToAdd.height, boxToAdd.width);
-        //Set position
-        params.setMargins(boxToAdd.coords.x, boxToAdd.coords.y,0,0);
+        //Set position,
+        params.setMargins(DEFAULT_X, DEFAULT_Y,0,0);
         //Apply parameters to ImageView
         boxImage.setLayoutParams(params);
+        //Reset bars to default position
+        adjustBarsToDefault();
 
         //Add ImageView to layout
         pallet.addView(boxImage);
@@ -205,6 +220,16 @@ public class Editor extends Fragment {
 
         animSetline.setDuration(500);
         animSetline.start();
+    }
+
+    private void adjustBarsToItem(int step) {
+        yAxisPos.setProgress(designBeingEdited.boxList.get(step).coords.y);
+        xAxisPos.setProgress(designBeingEdited.boxList.get(step).coords.x);
+    }
+
+    private void adjustBarsToDefault() {
+        yAxisPos.setProgress(DEFAULT_X);
+        xAxisPos.setProgress(DEFAULT_Y);
     }
 
     private void setPosition(ImageView itemToMove, int x, int y) {
@@ -227,10 +252,12 @@ public class Editor extends Fragment {
             onScreenBoxes.get(i).setImageAlpha(100);
         }
     }
-    
+
+    /*
+     * For making this more user understandable, numbering will start at 1
+     */
     private void updateStepIndicator() {
-        int totalSteps = designBeingEdited.boxList.size();
-        stepIndicator.setText(currentStepNumber + "/" + totalSteps);
+        stepIndicator.setText(stepBeingEdited+1 + "/" + designBeingEdited.boxList.size());
     }
 
 
@@ -238,6 +265,25 @@ public class Editor extends Fragment {
         
     }
 
+    private void updateInfoText() {
+        Coord coordsToPrint = designBeingEdited.boxList.get(stepBeingEdited).coords;
+        String info = "X: ";
+        info += coordsToPrint.x*PXTOCM;
+        info += "cm\nY: ";
+        info += coordsToPrint.y*PXTOCM;
+        info += "cm\nZ: ";
+        info += coordsToPrint.z;
+        info += "cm\nW: ";
+        info += coordsToPrint.w;
+        info += "deg: ";
+        infoText.setText(info);
+    }
+
+    void changeSelectedStep(int newStep) {
+        stepBeingEdited = newStep;
+        updateInfoText();
+        updateStepIndicator();
+    }
 
     /*****************************************************
      *                         --USER INTERFACE--
@@ -259,24 +305,12 @@ public class Editor extends Fragment {
                 designBeingEdited.boxList.remove(stepBeingEdited);
             }
         });
-        /*
-
-        confirmStep.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(designBeingEdited != null) {
-                    //TODO Esto tiene sentido? no se tratara siempe de añadir
-                    //a veces se estará editando un paso que ya existe
-                    designBeingEdited.boxList.add(boxBeingEdited);
-                }
-            }
-        });
-        */
 
         rotateLeft.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO tidy up
                 int currentAngle = designBeingEdited.boxList.get(stepBeingEdited).coords.w;
-                designBeingEdited.boxList.get(stepBeingEdited).coords.w = (currentAngle-90) % 360;
+                designBeingEdited.boxList.get(stepBeingEdited).coords.w = (currentAngle-90);// % 360;
             }
         });
 
@@ -284,40 +318,88 @@ public class Editor extends Fragment {
             public void onClick(View v) {
                 //TODO tidy up
                 int currentAngle = designBeingEdited.boxList.get(stepBeingEdited).coords.w;
-                designBeingEdited.boxList.get(stepBeingEdited).coords.w = (currentAngle+90) % 360;
+                designBeingEdited.boxList.get(stepBeingEdited).coords.w = (currentAngle+90);// % 360;
             }
         });
 
         arrowNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 int totalSteps = designBeingEdited.boxList.size();
-                if(currentStepNumber < totalSteps) {
-                    currentStepNumber++;
-                    updateStepIndicator();
+                if(stepBeingEdited < totalSteps-1) {
+                    changeSelectedStep(stepBeingEdited+1);
+                    adjustBarsToItem(stepBeingEdited);
                 }
             }
         });
 
         arrowPrev.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    int totalSteps = designBeingEdited.boxList.size();
-                    if(currentStepNumber > 0) {
-                        currentStepNumber--;
-                        updateStepIndicator();
-                    }
-                }
-        });
-
-        /*
-        xAxisPos.setOnSeekBarChangeListener(new View.onChangeListener() {
-            public void onSeekbarChangeListener(View v) {
-                int totalSteps = designBeingEdited.boxList.size();
-                if(currentStepNumber > 0) {
-                    currentStepNumber--;
-                    updateStepIndicator();
+            public void onClick(View v) {
+                if(stepBeingEdited > 0) {
+                    changeSelectedStep(stepBeingEdited-1);
+                    adjustBarsToItem(stepBeingEdited);
                 }
             }
-        });*/
+        });
+
+
+        xAxisPos.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                //Trigger only with user-generated interaction
+                if(designBeingEdited.boxList.size() > 0 && fromUser) {
+
+                    //Calculate margin to ensure box is inside of the pallet
+                    int xMargin = WIDTH_PX - designBeingEdited.boxList.get(stepBeingEdited).width;
+                    Log.d("margin", xMargin + "");
+                    if(progress < xMargin) {
+                        designBeingEdited.boxList.get(stepBeingEdited).coords.x = progress;
+                        onScreenBoxes.get(stepBeingEdited).setX(progress);
+                        updateInfoText();
+                    }
+                }
+            }
+        });
+
+        yAxisPos.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                //Trigger only with user-generated interaction and
+                //If the list is not empty
+                if(designBeingEdited.boxList.size() > 0 && fromUser) {
+
+                    //Calculate margin to ensure box is inside of the pallet
+                    int yMargin = HEIGHT_PX - designBeingEdited.boxList.get(stepBeingEdited).height;
+                    Log.d("margin", yMargin + "");
+                    if(progress < yMargin) {
+                        designBeingEdited.boxList.get(stepBeingEdited).coords.y = progress;
+                        onScreenBoxes.get(stepBeingEdited).setY(progress);
+                        updateInfoText();
+                    }
+                }
+            }
+        });
 
 
         //Select item from list
@@ -382,9 +464,13 @@ public class Editor extends Fragment {
         stepIndicator = view.findViewById(R.id.editor_textView_steps);
         infoText = view.findViewById(R.id.editor_textView_info);
         editorListView = view.findViewById(R.id.editor_listView_items);
-        pallet = (RelativeLayout) view.findViewById(R.id.control_relativeLayout_pallet);
+        pallet = (RelativeLayout) view.findViewById(R.id.editor_relativeLayout_pallet);
         xAxisPos = (SeekBar) view.findViewById(R.id.editor_seekBar_xaxis);
         yAxisPos = (SeekBar) view.findViewById(R.id.editor_seekBar_yaxis);
+
+        //configure seekbars
+        xAxisPos.setMax(WIDTH_PX);
+        yAxisPos.setMax(HEIGHT_PX);
     }
 
     /*****************************************************
@@ -392,10 +478,11 @@ public class Editor extends Fragment {
      *****************************************************/
     private void createSideMenu() {
         sideListObjects = new ArrayList<>();
-        
+
+
         //ListObjectManager.ReadBoxes();
-        sideListObjects.add(new BoxPrototype(0,0, R.mipmap.box_lovalive));
-        sideListObjects.add(new BoxPrototype(0,0, R.mipmap.box_side));
+        sideListObjects.add(new BoxPrototype(100,100, R.mipmap.box_lovalive));
+        sideListObjects.add(new BoxPrototype(100,10, R.mipmap.box_side));
         
         
         //This item is not really a Box design, but a button

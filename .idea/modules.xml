@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Palletizer.iml" filepath="$PROJECT_DIR$/Palletizer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PalletizerRBS9may.iml" filepath="$PROJECT_DIR$/PalletizerRBS9may.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

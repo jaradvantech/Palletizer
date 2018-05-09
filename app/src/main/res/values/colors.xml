@@ -24,5 +24,6 @@
     <color name="brick_color_14">#d4d4d4</color>
     <color name="brick_color_15">#8b8b8b</color>
     <color name="colorSecondaryPale">#276af1</color>
+    <color name="colorSecondaryPalest">#5992ee</color>
     <color name="colorYellow">#eeff21</color>
 </resources>

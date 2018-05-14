@@ -6,5 +6,6 @@
     SDK will give unique values during compile time.-->
     <item name="opt_debug_write" type="id"/>
     <item name="opt_editor_add" type="id"/>
+    <item name="opt_editor_new" type="id"/>
 
 </resources>

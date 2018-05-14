@@ -53,7 +53,8 @@ public class Editor extends Fragment {
     private int currentStepNumber;
     private int itemToDelete = 0;
 
-    private AlertDialog.Builder builder;
+    private AlertDialog.Builder deleteDialogBuilder;
+    private AlertDialog.Builder saveDialogBuilder;
     private EditorListAdapter adapter;
     private ArrayList<ImageView> onScreenBoxes;
     private ArrayList<BoxPrototype> sideListObjects;
@@ -275,7 +276,7 @@ public class Editor extends Fragment {
         info += coordsToPrint.z;
         info += "cm\nW: ";
         info += coordsToPrint.w;
-        info += "deg: ";
+        info += "deg";
         infoText.setText(info);
     }
 
@@ -291,18 +292,31 @@ public class Editor extends Fragment {
     private void createListeners() {
 
         /*
-         * Start an entirely new design. 
+         * Start an entirely new design.
          */
         newButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //TODO: show Warning to user
-                
+
             }
         });
 
         removeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                designBeingEdited.boxList.remove(stepBeingEdited);
+                if(designBeingEdited.boxList.size() > 0) {
+                    //Remove view fom pallet
+                    ((ViewGroup) onScreenBoxes.get(stepBeingEdited).getParent()).removeView(onScreenBoxes.get(stepBeingEdited));
+                    onScreenBoxes.remove(stepBeingEdited);
+
+                    designBeingEdited.boxList.remove(stepBeingEdited);
+
+                    //If index was the last one, decrement current step
+                    if(designBeingEdited.boxList.size() <= stepBeingEdited) {
+                        stepBeingEdited--;
+                    }
+
+                    updateStepIndicator();
+                }
             }
         });
 
@@ -338,6 +352,14 @@ public class Editor extends Fragment {
                     changeSelectedStep(stepBeingEdited-1);
                     adjustBarsToItem(stepBeingEdited);
                 }
+            }
+        });
+
+        confirmStep.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                AlertDialog dialog = saveDialogBuilder.create();
+                dialog.setIcon(R.mipmap.faq);
+                dialog.show();
             }
         });
 
@@ -417,12 +439,14 @@ public class Editor extends Fragment {
             }
         });
 
-        //Create delete dialog
-        builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(getString(R.string.Warning));
-        builder.setMessage(getString(R.string.Doyoureallywanttodeletethisitem));
+        /*
+         * Dialog shown when long pressing an item in the side list for deletion
+         */
+        deleteDialogBuilder = new AlertDialog.Builder(getActivity());
+        deleteDialogBuilder.setTitle(getString(R.string.Warning));
+        deleteDialogBuilder.setMessage(getString(R.string.Doyoureallywanttodeletethisitem));
         //menu buttons listener
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        DialogInterface.OnClickListener deleteDialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch(which){
@@ -436,20 +460,58 @@ public class Editor extends Fragment {
                 }
             }
         };
-        builder.setPositiveButton(getString(R.string.Delete), dialogClickListener);
-        builder.setNegativeButton(getString(R.string.Cancel), dialogClickListener);
+        deleteDialogBuilder.setPositiveButton(getString(R.string.Delete), deleteDialogClickListener);
+        deleteDialogBuilder.setNegativeButton(getString(R.string.Cancel), deleteDialogClickListener);
 
         //Delete item from list
         editorListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 itemToDelete = position;
-                AlertDialog dialog = builder.create();
+                AlertDialog dialog = deleteDialogBuilder.create();
                 dialog.setIcon(R.mipmap.warning);
                 dialog.show();
                 return true;
             }
         });
+
+        /*
+         * Dialog shown whe saving hte current design
+         */
+        saveDialogBuilder = new AlertDialog.Builder(getActivity());
+        saveDialogBuilder.setTitle(getString(R.string.Warning));
+        saveDialogBuilder.setMessage("Do you want to save this design?");
+        //menu buttons listener
+        DialogInterface.OnClickListener saveDialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch(which){
+                    case DialogInterface.BUTTON_POSITIVE:
+
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            }
+        };
+        saveDialogBuilder.setPositiveButton(getString(R.string.Save), saveDialogClickListener);
+        saveDialogBuilder.setNegativeButton(getString(R.string.Cancel), saveDialogClickListener);
+
+        //Delete item from list
+        editorListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                itemToDelete = position;
+                AlertDialog dialog = saveDialogBuilder.create();
+                dialog.setIcon(R.mipmap.warning);
+                dialog.show();
+                return true;
+            }
+        });
+
+
+
     }
 
     private void findUIElements() {
@@ -508,6 +570,9 @@ public class Editor extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
+    /*****************************************************
+     *                         --DIALOGS--
+     *****************************************************/
 
 
     public interface OnFragmentInteractionListener {

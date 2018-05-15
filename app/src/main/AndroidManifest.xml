@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="adjustPan">
 
-        <!-- RBS add splash screen -->
+        <!-- Activity for Splash Screen -->
         <activity
             android:name="com.example.administrator.Palletizer.SplashActivity"
             android:label="@string/app_name"
@@ -25,6 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- This activity is part of the user interface -->
+        <activity android:name="com.example.administrator.Palletizer.EditorNew"></activity>
+
+        <!-- The Real thing -->
         <activity
             android:name="com.example.administrator.Palletizer.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>

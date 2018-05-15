@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity
     Manual manual = new Manual();
     Debug debug = new Debug();
     DebugWrite debug_write = new DebugWrite();
-    EditorNew editorNew = new EditorNew();
     Settings settings = new Settings();
     Loading loading = new Loading();
     Alarms alarms = new Alarms();
@@ -137,7 +136,6 @@ public class MainActivity extends AppCompatActivity
         manager.beginTransaction().replace(R.id.holder_algorithm, algorithm, algorithm.getTag()).commit();
         manager.beginTransaction().replace(R.id.holder_editor, editor, editor.getTag()).commit();
         manager.beginTransaction().replace(R.id.holder_editor_add, editor_add, editor_add.getTag()).commit();
-        manager.beginTransaction().replace(R.id.holder_editor_new, editorNew, editorNew.getTag()).commit();
         manager.beginTransaction().replace(R.id.holder_logs, logs, logs.getTag()).commit();
         manager.beginTransaction().replace(R.id.holder_manual, manual, manual.getTag()).commit();
         manager.beginTransaction().replace(R.id.holder_debug, debug, debug.getTag()).commit();
@@ -185,7 +183,6 @@ public class MainActivity extends AppCompatActivity
             //If in sub-screen, return to main screen
             if(previous_id == R.id.opt_debug_write) switchToLayout(R.id.nav_debug);
             if(previous_id == R.id.opt_editor_add) switchToLayout(R.id.nav_editor);
-            if(previous_id == R.id.opt_editor_new) switchToLayout(R.id.nav_editor);
 
             //Otherwise go to line status
             else {
@@ -286,9 +283,6 @@ public class MainActivity extends AppCompatActivity
                 retLayout = (ConstraintLayout) this.findViewById(R.id.holder_editor);
                 break;
             case R.id.opt_editor_add:
-                retLayout = (ConstraintLayout) this.findViewById(R.id.holder_editor_add);
-                break;
-            case R.id.opt_editor_new:
                 retLayout = (ConstraintLayout) this.findViewById(R.id.holder_editor_add);
                 break;
             case R.id.nav_logs:

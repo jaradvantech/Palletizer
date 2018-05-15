@@ -1,17 +1,12 @@
 package com.example.administrator.Palletizer;
 
 
-import android.content.Context;
-import android.util.Log;
-
-import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import static com.example.administrator.Palletizer.Palletizer.EMERGENCY_ALARMS;
 import static com.example.administrator.Palletizer.Palletizer.LIMIT_ALARMS;
-import static com.example.administrator.Palletizer.Palletizer.OTHER_ALARMS;
 import static com.example.administrator.Palletizer.Palletizer.TOTAL_ALARMS;
 
 public class AlarmManager {
@@ -75,4 +70,5 @@ public class AlarmManager {
     public boolean[] getNewAlarmTypes() {
         return newAlarmTypes;
     }
+
 }

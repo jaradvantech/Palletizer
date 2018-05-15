@@ -14,11 +14,8 @@ public class Design {
     private String name;
     public ArrayList<Box> boxList;
 
-    Design(){
+    Design(int type, String name){
         boxList = new ArrayList<Box>();
-    }
-
-    public Design(int type, String name) {
         this.type = type;
         this.name = name;
     }

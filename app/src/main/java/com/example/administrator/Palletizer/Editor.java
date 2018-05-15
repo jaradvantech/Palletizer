@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,14 +21,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class Editor extends Fragment {
@@ -115,7 +112,7 @@ public class Editor extends Fragment {
          */
         onScreenBoxes = new ArrayList<ImageView>();
 
-        designBeingEdited = new Design();
+        designBeingEdited = new Design(1, "default");
 
 
 
@@ -170,21 +167,22 @@ public class Editor extends Fragment {
 
             //Move it to the center of the pallet TODO think about animations in the future
             //moveTo(onScreenBoxes.get(stepBeingEdited), DEFAULT_X, DEFAULT_Y);
+        } else {
+
+            //TODO SHOW DIALOG
+            //TODO START NEW DESIGN
         }
     }
     /*****************************************************
      *                         --DESIGN MANAGEMENT--
      *****************************************************/
-    private void startNewDesign() {
-        designBeingEdited = new Design();
+    private void startNewDesign(String newDesignName) {
+        designBeingEdited = new Design(1, newDesignName);
         updateUserInterface();
     }
 
     private void saveDesign() {
-        //Read prefs
-        //        //Add object to list
-        //        //save prefs
-        startNewDesign();
+        DesignManager.saveDesign(designBeingEdited, getActivity());
     }
     
     
@@ -296,8 +294,9 @@ public class Editor extends Fragment {
          */
         newButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO: show Warning to user
-
+                //Start a new activity for asking the name of the new item. Will return a string with the name
+                Intent intent = new Intent(getContext(), EditorNew.class);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -509,10 +508,20 @@ public class Editor extends Fragment {
                 return true;
             }
         });
-
-
-
     }
+
+    /*
+     * Name for new design has been defined
+     */
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                startNewDesign(data.getStringExtra("newDesignName"));
+            }
+        }
+    }
+
 
     private void findUIElements() {
         newButton = view.findViewById(R.id.editor_button_new);
@@ -526,9 +535,9 @@ public class Editor extends Fragment {
         stepIndicator = view.findViewById(R.id.editor_textView_steps);
         infoText = view.findViewById(R.id.editor_textView_info);
         editorListView = view.findViewById(R.id.editor_listView_items);
-        pallet = (RelativeLayout) view.findViewById(R.id.editor_relativeLayout_pallet);
-        xAxisPos = (SeekBar) view.findViewById(R.id.editor_seekBar_xaxis);
-        yAxisPos = (SeekBar) view.findViewById(R.id.editor_seekBar_yaxis);
+        pallet = view.findViewById(R.id.editor_relativeLayout_pallet);
+        xAxisPos = view.findViewById(R.id.editor_seekBar_xaxis);
+        yAxisPos = view.findViewById(R.id.editor_seekBar_yaxis);
 
         //configure seekbars
         xAxisPos.setMax(WIDTH_PX);
@@ -556,13 +565,7 @@ public class Editor extends Fragment {
     }
 
     public void refreshObjectList() {
-        //TODO replace this with a static class
-        Gson gson = new Gson();
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("CUSTOMBOXES", Context.MODE_PRIVATE);
-        String jsonPreferences = sharedPref.getString("CUSTOMBOXES", "");
-
-        Type type = new TypeToken<List<BoxPrototype>>() {}.getType();
-        sideListObjects = gson.fromJson(jsonPreferences, type);
+        sideListObjects = BoxTypeManager.getFromPreferences(getActivity());
 
         //Last item on the list will be the ADD button
         sideListObjects.add(new BoxPrototype(0,0, R.mipmap.add));

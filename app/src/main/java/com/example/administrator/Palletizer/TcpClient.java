@@ -20,7 +20,7 @@ public class TcpClient {
 
     private String mServerMessage;
     private OnMessageReceived mMessageListener = null;
-    private final int TIMEOUT_LIMIT = 3;
+    private final int TIMEOUT_LIMIT = 300; //change to 3
     private final int SOCKET_TIMEOUT = 1000;
     private final int RETRY_INTERVAL = 2000;
     private InetAddress SERVER_IP;

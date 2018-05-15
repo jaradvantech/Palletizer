@@ -1,67 +1,53 @@
 package com.example.administrator.Palletizer;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 
-public class EditorNew extends Fragment {
+public class EditorNew extends AppCompatActivity {
 
-
-    private Gson gson;
-    private SharedPreferences sharedPref;
-    private AlertDialog.Builder saveBuilder;
     private AlertDialog.Builder overwriteBuilder;
+    private AlertDialog.Builder invalidNameBuilder;
 
+    private EditText nameInput;
     private Button create_button;
-
-    public EditorNew() {
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        setContentView(R.layout.activity_editor_new);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_editor_new, container, false);
+        nameInput = (EditText) findViewById(R.id.editorNew_editText_name);
+        create_button = findViewById(R.id.editorNew_button_create);
 
-        create_button = view.findViewById(R.id.editorNew_button_create);
 
         /*****************************************************
-         *                                --SAVE DIALOG--
+         *                  --INVALID NAME DIALOG--
          *****************************************************/
-        saveBuilder.setTitle(getString(R.string.Warning));
-        saveBuilder.setMessage("Save this item?");
+        invalidNameBuilder = new AlertDialog.Builder(this);
+        invalidNameBuilder.setTitle("Error");
+        invalidNameBuilder.setMessage("The name entered is not valid");
+
+
+        /*****************************************************
+         *                   --SAVE DIALOG--
+         *****************************************************/
+        overwriteBuilder = new AlertDialog.Builder(this);
+        overwriteBuilder.setTitle(getString(R.string.Warning));
+        overwriteBuilder.setMessage("This design will be overwritten");
         //menu buttons listener
         DialogInterface.OnClickListener saveDialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-
+                        returnName(nameInput.getText().toString());
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -69,19 +55,45 @@ public class EditorNew extends Fragment {
                 }
             }
         };
-        saveBuilder.setPositiveButton(getString(R.string.Save), saveDialogClickListener);
-        saveBuilder.setNegativeButton(getString(R.string.Cancel), saveDialogClickListener);
+        overwriteBuilder.setPositiveButton("Continue", saveDialogClickListener);
+        overwriteBuilder.setNegativeButton(getString(R.string.Cancel), saveDialogClickListener);
 
 
+        /*****************************************************
+         *                 --CREATE BUTTON LISTENER--
+         *****************************************************/
         create_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                AlertDialog dialog = saveBuilder.create();
-                dialog.setIcon(R.mipmap.faq);
-                dialog.show();
+                String name = nameInput.getText().toString();
+
+                if(DesignManager.alreadyExists(name, EditorNew.this)) {
+                    AlertDialog dialog = overwriteBuilder.create();
+                    dialog.setIcon(R.mipmap.warning);
+                    dialog.show();
+                }
+                else {
+                    returnName(name);
+                }
             }
         });
+    }
 
-        return view;
+
+    public void returnName(String name) {
+
+        //Other conditions can be added as well
+        if(name.equals("") == false) {
+            Intent intent = new Intent();
+            intent.putExtra("newDesignName", name);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+
+        else {
+            AlertDialog dialog = invalidNameBuilder.create();
+            dialog.setIcon(R.mipmap.error);
+            dialog.show();
+        }
     }
 
 }

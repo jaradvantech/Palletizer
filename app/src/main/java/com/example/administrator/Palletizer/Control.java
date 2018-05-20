@@ -2,7 +2,6 @@ package com.example.administrator.Palletizer;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,18 +13,18 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 
 public class Control extends Fragment {
 
     private OnFragmentInteractionListener mFragmentInteraction;
     private ArrayList<Design> designs;
-    private ArrayList<ImageView> screenObjects;
     private DesignListAdapter listAdapter;
     private ListView designListView;
     private View view;
     private RelativeLayout palletCanvas;
+    private int lastSelectedItem = 0;
+    private final int CMTOPX = 5;
 
     public Control() {
     }
@@ -41,18 +40,12 @@ public class Control extends Fragment {
 
         //Set everything up
         palletCanvas = (RelativeLayout) view.findViewById(R.id.control_relativeLayout_pallet);
-        screenObjects = new ArrayList<>();
 
 
         /*Listview **************************************/
-        designs = new ArrayList<>();
-        designs.add(new Design(0, "Design 1"));
-        designs.add(new Design(0, "Design 2"));
-        designs.add(new Design(1, "Design 3"));
-        designs.add(new Design(1, "Design 4"));
-        designs.add(new Design(1, "Design 5"));
+        designs = DesignManager.getFromPreferences(getContext());
         designListView = (ListView) view.findViewById(R.id.control_ListView_designs);
-        listAdapter = new DesignListAdapter(getActivity(), designs);
+        listAdapter = new DesignListAdapter(getContext(), designs);
         designListView.setAdapter(listAdapter);
 
         /*****************************************************
@@ -62,8 +55,28 @@ public class Control extends Fragment {
         designListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    destroyPreviousPreview();
                     Design selectedObject = designs.get(position);
                     loadDesignPreview(selectedObject);
+            }
+        });
+
+        designListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                //TODO dialog with three options: EDIT, DELETE and dismiss
+                lastSelectedItem = position;
+                /*
+                AlertDialog dialog = builder.create();
+                dialog.setIcon(R.mipmap.warning);
+                dialog.show();
+                */
+
+                designs.remove(lastSelectedItem);
+                DesignManager.saveToPreferences(designs, getContext());
+                listAdapter.notifyDataSetChanged();
+
+                return true;
             }
         });
 
@@ -84,33 +97,38 @@ public class Control extends Fragment {
         }
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mFragmentInteraction = null;
+    public void refreshObjectList() {
+        Log.d("refreshing", "objectlist");
+        designs = DesignManager.getFromPreferences(getContext());
+        Log.d("objectlist", "size: " + designs.size());
+        listAdapter.notifyDataSetChanged();
     }
 
     private void loadDesignPreview(Design designToPreview) {
-        ArrayList<Coord> designSteps = designToPreview.getSteps();
-        //
+        //Remove old preview
+        destroyPreviousPreview();
 
-        //int totalSteps = designSteps.size();
-        Box aBox = new Box(new Coord(10, 10, 0, 0), 100, 400, R.mipmap.box);
-        addOnTheFly(aBox);
+        //Load and draw boxes of new design
+        ArrayList<Box> boxList = designToPreview.getSteps();
+        int totalSteps = boxList.size();
+
+        for(int i=0; i<totalSteps; i++) {
+            drawBox(boxList.get(i));
+        }
     }
 
     private void destroyPreviousPreview() {
         palletCanvas.removeAllViews();
     }
 
-    private void addOnTheFly(Box boxToAdd){
+    private void drawBox(Box boxToAdd) {
         //Dynamically create ImageView
         ImageView boxImage = new ImageView(getActivity());
         boxImage.setImageResource(boxToAdd.textureResource);
 
         //Set size
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(boxToAdd.height, boxToAdd.width);
-        //Set position
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(boxToAdd.height*CMTOPX, boxToAdd.width*CMTOPX);
+        //Set position,
         params.setMargins(boxToAdd.coords.x, boxToAdd.coords.y,0,0);
         //Apply parameters to ImageView
         boxImage.setLayoutParams(params);

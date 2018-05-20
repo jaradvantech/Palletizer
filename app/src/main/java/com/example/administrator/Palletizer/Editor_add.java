@@ -45,8 +45,6 @@ public class Editor_add extends Fragment {
     private final int MINWIDTH = 3;
     private final int MINLENGTH = 3;
     private ArrayList<BoxPrototype> listOfCustomBoxes;
-    private Gson gson;
-    private SharedPreferences sharedPref;
     private AlertDialog.Builder saveBuilder;
     private AlertDialog.Builder overwriteBuilder;
 
@@ -75,8 +73,6 @@ public class Editor_add extends Fragment {
         //Create objects
         saveBuilder = new AlertDialog.Builder(getActivity());
         overwriteBuilder = new AlertDialog.Builder(getActivity());
-        gson = new Gson();
-        sharedPref = getActivity().getSharedPreferences("CUSTOMBOXES", Context.MODE_PRIVATE);
 
         //First step is loading the previous items
         loadObjectList();
@@ -245,7 +241,7 @@ public class Editor_add extends Fragment {
 
             } else {
 
-                 /*Create new object*/
+                /*Create new object*/
                 BoxPrototype newCustomBox = new BoxPrototype(boxName, x, y, R.mipmap.box);
 
                 /*Add new object to list*/
@@ -254,7 +250,7 @@ public class Editor_add extends Fragment {
                 /*Write objects to SharedPrefs*/
                 saveObjectList();
 
-                 /*Pop tart*/
+                /*Pop tart*/
                 Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
 
                 /*Reset everything to default*/
@@ -271,31 +267,13 @@ public class Editor_add extends Fragment {
         }
     }
 
- /*
-  * Esta petando, ya lo mirare cuando me de
-  */
 
     public void loadObjectList() {
-        Log.d("GSON", "trying to load object list");
-        String jsonPreferences = sharedPref.getString("CUSTOMBOXES", "");
-
-        //Debugonly
-        Log.d("JSON", jsonPreferences);
-
-        Type type = new TypeToken<List<BoxPrototype>>() {}.getType();
-        listOfCustomBoxes = gson.fromJson(jsonPreferences, type);
-        if(listOfCustomBoxes == null) {
-            Log.d("GSON", "No previously saved objects found");
-            listOfCustomBoxes = new ArrayList<BoxPrototype>();
-        }
+        listOfCustomBoxes = BoxTypeManager.getFromPreferences(getContext());
     }
 
     public void saveObjectList() {
-        Log.d("GSON", "trying to save object list");
-        SharedPreferences.Editor editor = sharedPref.edit();
-        String serializedObjects = gson.toJson(listOfCustomBoxes);
-        editor.putString("CUSTOMBOXES", serializedObjects);
-        editor.commit();
+        BoxTypeManager.saveToPreferences(listOfCustomBoxes, getContext());
     }
 
     private boolean objectExists() {

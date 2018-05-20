@@ -48,17 +48,23 @@ public class DesignListAdapter extends BaseAdapter {
         TextView titleTextView = (TextView) rowView.findViewById(R.id.design_list_title);
         titleTextView.setText(mObject.getName());
 
+        //Set subtitle and thumbnail according to design type
+        String subtitle = "";
         //Verified design
         if(mObject.getType() == 0) {
-
+            subtitle += "Design By LOVALIVE";
             thumbnailImageView.setImageResource(R.mipmap.verified);
 
          //Custom design
         } else if (mObject.getType() == 1) {
-
-
+            subtitle += "Custom design";
+            //No thumbnail
         }
+        subtitle += ", " + mObject.boxList.size() + " boxes.";
 
+        //Subtitle
+        TextView subTitleTextView = (TextView) rowView.findViewById(R.id.design_list_subtitle);
+        subTitleTextView.setText(subtitle);
 
         return rowView;
     }

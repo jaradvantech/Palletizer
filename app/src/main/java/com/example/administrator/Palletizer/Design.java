@@ -36,12 +36,7 @@ public class Design {
         return name;
     }
 
-    public ArrayList<Coord> getSteps() {
-        ArrayList<Coord> steps = new ArrayList<Coord>();
-        int listSize = boxList.size();
-        for(int i=0; i<listSize; i++) {
-            steps.add(boxList.get(i).coords);
-        }
-        return steps;
+    public ArrayList<Box> getSteps() {
+        return boxList;
     }
 }

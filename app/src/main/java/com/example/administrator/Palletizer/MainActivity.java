@@ -47,21 +47,6 @@ public class MainActivity extends AppCompatActivity
         Alarms.OnFragmentInteractionListener,
         NavigationView.OnNavigationItemSelectedListener {
 
-    int previous_id = R.id.holder_loading;
-    TcpClient mTcpClient;
-    Boolean FirstTimeRPRV =true;
-    Line line = new Line();
-    Control algorithm = new Control();
-    Editor editor = new Editor();
-    Editor_add editor_add = new Editor_add();
-    Logs logs = new Logs();
-    Manual manual = new Manual();
-    Debug debug = new Debug();
-    DebugWrite debug_write = new DebugWrite();
-    Settings settings = new Settings();
-    Loading loading = new Loading();
-    Alarms alarms = new Alarms();
-
 
     /*****************************************************
      *                                  --Globals--
@@ -76,7 +61,7 @@ public class MainActivity extends AppCompatActivity
     private ImageView miscAlarmIcon;
     private ImageView limitAlarmIcon;
     private ImageView emergencyAlarmIcon;
-
+    private Boolean FirstTimeRPRV = true;
     private TextView title;
     private Button appbarTransparentButton;
 
@@ -84,6 +69,20 @@ public class MainActivity extends AppCompatActivity
     private String CurrentLanguage = "en"; //default
     private NavigationView navigationView;
     private DrawerLayout drawer;
+    private int previous_id = R.id.holder_loading;
+    private TcpClient mTcpClient;
+
+    private Line line = new Line();
+    private Control algorithm = new Control();
+    private Editor editor = new Editor();
+    private Editor_add editor_add = new Editor_add();
+    private Logs logs = new Logs();
+    private Manual manual = new Manual();
+    private Debug debug = new Debug();
+    private DebugWrite debug_write = new DebugWrite();
+    private Settings settings = new Settings();
+    private Loading loading = new Loading();
+    private Alarms alarms = new Alarms();
 
     /*****************************************************
      *
@@ -254,6 +253,11 @@ public class MainActivity extends AppCompatActivity
          * Update the list of palletizable objects in case something was added.
          */
         if(previous_id == R.id.opt_editor_add) editor.refreshObjectList();
+
+        /*
+         * Update design list
+         */
+        if(previous_id == R.id.nav_editor) algorithm.refreshObjectList();
 
         //Select layouts to change
         ConstraintLayout new_layout = getLayoutByID(new_id);

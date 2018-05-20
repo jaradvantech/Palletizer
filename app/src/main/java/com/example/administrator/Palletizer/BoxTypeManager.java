@@ -18,8 +18,13 @@ public class BoxTypeManager {
         String jsonPreferences = sharedPref.getString("BOXTYPES", "");
         Type type = new TypeToken<List<BoxPrototype>>() {}.getType();
 
+        //Get saved boxes
         ArrayList<BoxPrototype> boxDesigns = gson.fromJson(jsonPreferences, type);
         if(boxDesigns == null) boxDesigns = new ArrayList<BoxPrototype>();
+
+        //Append default designs
+        boxDesigns.add(new BoxPrototype(80,80, R.mipmap.box_lovalive));
+        boxDesigns.add(new BoxPrototype(6, 80, R.mipmap.box_side));
 
         return boxDesigns;
 

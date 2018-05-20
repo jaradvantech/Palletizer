@@ -10,12 +10,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class EditorListAdapter extends BaseAdapter {
+public class BoxDesignListAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<BoxPrototype> mDataSource;
+    private final float SCALE = 0.5f;
 
-    public EditorListAdapter(Context context, ArrayList<BoxPrototype> items) {
+    public BoxDesignListAdapter(Context context, ArrayList<BoxPrototype> items) {
         mContext = context;
         mDataSource = items;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

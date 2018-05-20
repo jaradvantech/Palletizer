@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -21,6 +20,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -31,31 +31,30 @@ public class Editor extends Fragment {
 
     private OnFragmentInteractionListener mFragmentInteraction;
     
-    private ImageButton confirmStep;
+    private ImageButton saveDesign;
     private Button newButton;
     private Button removeButton;
-    private Button editButton;
+    private Button insertButton;
     private ImageView rotateLeft;
     private ImageView rotateRight;
     private ImageView arrowPrev;
     private ImageView arrowNext;
     private TextView stepIndicator;
     private TextView infoText;
+    private TextView designName;
     private RelativeLayout pallet;
     private SeekBar xAxisPos;
     private SeekBar yAxisPos;
 
     private int stepBeingEdited;
     private Design designBeingEdited;
-    private int currentStepNumber;
     private int itemToDelete = 0;
 
     private AlertDialog.Builder deleteDialogBuilder;
     private AlertDialog.Builder saveDialogBuilder;
-    private EditorListAdapter adapter;
+    private BoxDesignListAdapter adapter;
     private ArrayList<ImageView> onScreenBoxes;
     private ArrayList<BoxPrototype> sideListObjects;
-    private ArrayList<Box> palletBoxes;
     private ListView editorListView;
     private View view;
 
@@ -67,9 +66,7 @@ public class Editor extends Fragment {
      */
     private final int WIDTH_PX = 600;
     private final int HEIGHT_PX = 500;
-    private final int WIDTH_CM = 120;
-    private final int HEIGHT_CM = 100;
-    private final float CMTOPX = 5f;
+    private final int CMTOPX = 5;
     private final float PXTOCM = 0.2f;
     private final int DEFAULT_X = 0;
     private final int DEFAULT_Y = 0;
@@ -102,24 +99,9 @@ public class Editor extends Fragment {
         createSideMenu();
 
         /*
-         * This list contains all the boxes present on the pallet. Since boxes
-         * are palletized one by one, each box represents one step.
-         */
-        palletBoxes = new ArrayList<Box>();
-
-        /*
          * This list has all the references to the objects in the screen
          */
         onScreenBoxes = new ArrayList<ImageView>();
-
-        designBeingEdited = new Design(1, "default");
-
-
-
-
-
-
-
 
         return view;
     }
@@ -141,51 +123,63 @@ public class Editor extends Fragment {
         mFragmentInteraction = null;
     }
 
-    public void onItemSelected(int selectedItem) {
-
-        ///moveTo(dynamicObjects[drawnObjects], DEFAULT_X, DEFAULT_Y);
-    }
-
 
     /*
      * Called when the user selects an item from the side list.
      */
     private void addElementToPallet(BoxPrototype protoType) {
-        if(designBeingEdited != null) {
+        if(designBeingEditedIsValid()) {
             //TODO create box from box prototype
-            Box newBox = new Box(new Coord(0,0,0,0), protoType.width, protoType.height, protoType.textureResource);
+            Box newBox = new Box(new Coord(0, 0, 0, 0), protoType.width, protoType.height, protoType.textureResource);
 
             //Add box to design
             designBeingEdited.boxList.add(newBox);
 
-
             //Now the box being edited is the last one
-            changeSelectedStep(designBeingEdited.boxList.size()-1);
+            changeSelectedStep(designBeingEdited.boxList.size() - 1);
 
             //Now, create an image that represents the aforementioned box
             addNewBoxToPallet(newBox);
 
             //Move it to the center of the pallet TODO think about animations in the future
             //moveTo(onScreenBoxes.get(stepBeingEdited), DEFAULT_X, DEFAULT_Y);
-        } else {
-
-            //TODO SHOW DIALOG
-            //TODO START NEW DESIGN
         }
     }
+
     /*****************************************************
      *                         --DESIGN MANAGEMENT--
      *****************************************************/
     private void startNewDesign(String newDesignName) {
         designBeingEdited = new Design(1, newDesignName);
-        updateUserInterface();
+        clearUI();
+        designName.setText(designBeingEdited.getName());
     }
 
     private void saveDesign() {
-        DesignManager.saveDesign(designBeingEdited, getActivity());
+        DesignManager.saveDesign(designBeingEdited, getContext());
+        Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
     }
-    
-    
+
+    public void editDesign(int designToEdit) {
+        designBeingEdited = DesignManager.getFromPreferences(getContext()).get(designToEdit);
+        designName.setText(designBeingEdited.getName());
+    }
+
+    public Boolean designBeingEditedIsValid() {
+        if(designBeingEdited != null) {
+            return true;
+        }
+        else {
+            //Show dialog asking for a design to be edited
+            AlertDialog.Builder noDesignDialog = new AlertDialog.Builder(getActivity());
+            noDesignDialog.setTitle("No design selected");
+            noDesignDialog.setMessage("Please press «New Design» to create a new one, OR edit an already existing design by long pressing on the list (Control Screen)");
+            AlertDialog dialog = noDesignDialog.create();
+            dialog.setIcon(R.mipmap.error);
+            dialog.show();
+            return false;
+        }
+    }
 
     /*****************************************************
      *                         --GRAPHIC FUNCTIONS--
@@ -196,7 +190,7 @@ public class Editor extends Fragment {
         boxImage.setImageResource(boxToAdd.textureResource);
 
         //Set size
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(boxToAdd.height, boxToAdd.width);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(boxToAdd.height*CMTOPX, boxToAdd.width*CMTOPX);
         //Set position,
         params.setMargins(DEFAULT_X, DEFAULT_Y,0,0);
         //Apply parameters to ImageView
@@ -231,10 +225,6 @@ public class Editor extends Fragment {
         xAxisPos.setProgress(DEFAULT_Y);
     }
 
-    private void setPosition(ImageView itemToMove, int x, int y) {
-
-    }
-
 
     private void setFocused(int focused) {
         int totalItems = onScreenBoxes.size();
@@ -260,20 +250,41 @@ public class Editor extends Fragment {
     }
 
 
-    private void updateUserInterface() {
-        
+    private void resetStepIndicator() {
+        stepIndicator.setText("0/0");
+    }
+
+    private void clearUI() {
+        //Delete all boxes from pallet
+        pallet.removeAllViews();
+        resetInfoText();
+        resetStepIndicator();
+        designName.setText("No Design Selected");
     }
 
     private void updateInfoText() {
         Coord coordsToPrint = designBeingEdited.boxList.get(stepBeingEdited).coords;
         String info = "X: ";
-        info += coordsToPrint.x*PXTOCM;
+        info += String.format("%.2f", coordsToPrint.x*PXTOCM);
         info += "cm\nY: ";
-        info += coordsToPrint.y*PXTOCM;
+        info += String.format("%.2f", coordsToPrint.y*PXTOCM);
         info += "cm\nZ: ";
-        info += coordsToPrint.z;
+        info += String.format("%.2f", coordsToPrint.z*PXTOCM);
         info += "cm\nW: ";
         info += coordsToPrint.w;
+        info += "deg";
+        infoText.setText(info);
+    }
+
+    private void resetInfoText() {
+        String info = "X: ";
+        info += "0.0";
+        info += "cm\nY: ";
+        info += "0.0";
+        info += "cm\nZ: ";
+        info += "0.0";
+        info += "cm\nW: ";
+        info += "0";
         info += "deg";
         infoText.setText(info);
     }
@@ -290,8 +301,30 @@ public class Editor extends Fragment {
     private void createListeners() {
 
         /*
-         * Start an entirely new design.
+         * Arrows to select an specific step from the design
          */
+        arrowNext.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (designBeingEditedIsValid()) {
+                    int totalSteps = designBeingEdited.boxList.size();
+                    if (stepBeingEdited < totalSteps - 1) {
+                        changeSelectedStep(stepBeingEdited + 1);
+                        adjustBarsToItem(stepBeingEdited);
+                    }
+                }
+            }
+        });
+
+        arrowPrev.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(designBeingEditedIsValid() && stepBeingEdited > 0) {
+                    changeSelectedStep(stepBeingEdited-1);
+                    adjustBarsToItem(stepBeingEdited);
+                }
+            }
+        });
+
+        //Start an entirely new design.
         newButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Start a new activity for asking the name of the new item. Will return a string with the name
@@ -300,9 +333,10 @@ public class Editor extends Fragment {
             }
         });
 
+        //Remove the selected step
         removeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(designBeingEdited.boxList.size() > 0) {
+                if (designBeingEditedIsValid() && designBeingEdited.boxList.size() > 0) {
                     //Remove view fom pallet
                     ((ViewGroup) onScreenBoxes.get(stepBeingEdited).getParent()).removeView(onScreenBoxes.get(stepBeingEdited));
                     onScreenBoxes.remove(stepBeingEdited);
@@ -310,7 +344,7 @@ public class Editor extends Fragment {
                     designBeingEdited.boxList.remove(stepBeingEdited);
 
                     //If index was the last one, decrement current step
-                    if(designBeingEdited.boxList.size() <= stepBeingEdited) {
+                    if (designBeingEdited.boxList.size() <= stepBeingEdited) {
                         stepBeingEdited--;
                     }
 
@@ -319,46 +353,42 @@ public class Editor extends Fragment {
             }
         });
 
+        //Insert step. Not sure if after or before current step and how to do it.
+        insertButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(designBeingEditedIsValid()) {
+                    //TODO no idea how to impleent this yet
+                }
+            }
+        });
+
         rotateLeft.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO tidy up
-                int currentAngle = designBeingEdited.boxList.get(stepBeingEdited).coords.w;
-                designBeingEdited.boxList.get(stepBeingEdited).coords.w = (currentAngle-90);// % 360;
+                if (designBeingEditedIsValid()) {
+                    int currentAngle = designBeingEdited.boxList.get(stepBeingEdited).coords.w;
+                    designBeingEdited.boxList.get(stepBeingEdited).coords.w = (currentAngle - 90) % 360;
+                    updateInfoText();
+                }
             }
         });
 
         rotateRight.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO tidy up
-                int currentAngle = designBeingEdited.boxList.get(stepBeingEdited).coords.w;
-                designBeingEdited.boxList.get(stepBeingEdited).coords.w = (currentAngle+90);// % 360;
-            }
-        });
-
-        arrowNext.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                int totalSteps = designBeingEdited.boxList.size();
-                if(stepBeingEdited < totalSteps-1) {
-                    changeSelectedStep(stepBeingEdited+1);
-                    adjustBarsToItem(stepBeingEdited);
+                if (designBeingEditedIsValid()) {
+                    int currentAngle = designBeingEdited.boxList.get(stepBeingEdited).coords.w;
+                    designBeingEdited.boxList.get(stepBeingEdited).coords.w = (currentAngle + 90) % 360;
+                    updateInfoText();
                 }
             }
         });
 
-        arrowPrev.setOnClickListener(new View.OnClickListener() {
+        saveDesign.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(stepBeingEdited > 0) {
-                    changeSelectedStep(stepBeingEdited-1);
-                    adjustBarsToItem(stepBeingEdited);
+                if(designBeingEditedIsValid()) {
+                    AlertDialog dialog = saveDialogBuilder.create();
+                    dialog.setIcon(R.mipmap.faq);
+                    dialog.show();
                 }
-            }
-        });
-
-        confirmStep.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                AlertDialog dialog = saveDialogBuilder.create();
-                dialog.setIcon(R.mipmap.faq);
-                dialog.show();
             }
         });
 
@@ -377,16 +407,18 @@ public class Editor extends Fragment {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //Trigger only with user-generated interaction
-                if(designBeingEdited.boxList.size() > 0 && fromUser) {
+                if(designBeingEditedIsValid()) {
+                    //Trigger only with user-generated interaction
+                    if (designBeingEdited.boxList.size() > 0 && fromUser) {
 
-                    //Calculate margin to ensure box is inside of the pallet
-                    int xMargin = WIDTH_PX - designBeingEdited.boxList.get(stepBeingEdited).width;
-                    Log.d("margin", xMargin + "");
-                    if(progress < xMargin) {
-                        designBeingEdited.boxList.get(stepBeingEdited).coords.x = progress;
-                        onScreenBoxes.get(stepBeingEdited).setX(progress);
-                        updateInfoText();
+                        //Calculate margin to ensure box is inside of the pallet
+                        int xMargin = WIDTH_PX - designBeingEdited.boxList.get(stepBeingEdited).width * CMTOPX;
+                        Log.d("margin", xMargin + "");
+                        if (progress < xMargin) {
+                            designBeingEdited.boxList.get(stepBeingEdited).coords.x = progress;
+                            onScreenBoxes.get(stepBeingEdited).setX(progress);
+                            updateInfoText();
+                        }
                     }
                 }
             }
@@ -406,17 +438,19 @@ public class Editor extends Fragment {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //Trigger only with user-generated interaction and
-                //If the list is not empty
-                if(designBeingEdited.boxList.size() > 0 && fromUser) {
+                if(designBeingEditedIsValid()) {
+                    //Trigger only with user-generated interaction and
+                    //If the list is not empty
+                    if (designBeingEdited.boxList.size() > 0 && fromUser && designBeingEditedIsValid()) {
 
-                    //Calculate margin to ensure box is inside of the pallet
-                    int yMargin = HEIGHT_PX - designBeingEdited.boxList.get(stepBeingEdited).height;
-                    Log.d("margin", yMargin + "");
-                    if(progress < yMargin) {
-                        designBeingEdited.boxList.get(stepBeingEdited).coords.y = progress;
-                        onScreenBoxes.get(stepBeingEdited).setY(progress);
-                        updateInfoText();
+                        //Calculate margin to ensure box is inside of the pallet
+                        int yMargin = HEIGHT_PX - designBeingEdited.boxList.get(stepBeingEdited).height * CMTOPX;
+                        Log.d("margin", yMargin + "");
+                        if (progress < yMargin) {
+                            designBeingEdited.boxList.get(stepBeingEdited).coords.y = progress;
+                            onScreenBoxes.get(stepBeingEdited).setY(progress);
+                            updateInfoText();
+                        }
                     }
                 }
             }
@@ -486,7 +520,7 @@ public class Editor extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 switch(which){
                     case DialogInterface.BUTTON_POSITIVE:
-
+                        saveDesign();
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -510,6 +544,7 @@ public class Editor extends Fragment {
         });
     }
 
+
     /*
      * Name for new design has been defined
      */
@@ -526,14 +561,15 @@ public class Editor extends Fragment {
     private void findUIElements() {
         newButton = view.findViewById(R.id.editor_button_new);
         removeButton = view.findViewById(R.id.editor_button_remove);
-        editButton = view.findViewById(R.id.editor_button_edit);
-        confirmStep = view.findViewById(R.id.editor_button_confirmStep);
+        insertButton = view.findViewById(R.id.editor_button_insert);
+        saveDesign = view.findViewById(R.id.editor_button_saveDesign);
         rotateLeft = view.findViewById(R.id.editor_imageView_rotateLeft);
         rotateRight = view.findViewById(R.id.editor_imageview_rotateRight);
         arrowPrev = view.findViewById(R.id.editor_imageView_prev);
         arrowNext = view.findViewById(R.id.editor_imageView_next);
         stepIndicator = view.findViewById(R.id.editor_textView_steps);
         infoText = view.findViewById(R.id.editor_textView_info);
+        designName = view.findViewById(R.id.editor_textView_designName);
         editorListView = view.findViewById(R.id.editor_listView_items);
         pallet = view.findViewById(R.id.editor_relativeLayout_pallet);
         xAxisPos = view.findViewById(R.id.editor_seekBar_xaxis);
@@ -549,18 +585,13 @@ public class Editor extends Fragment {
      *****************************************************/
     private void createSideMenu() {
         sideListObjects = new ArrayList<>();
-
-
-        //ListObjectManager.ReadBoxes();
-        sideListObjects.add(new BoxPrototype(100,100, R.mipmap.box_lovalive));
-        sideListObjects.add(new BoxPrototype(100,10, R.mipmap.box_side));
-        
+        sideListObjects = BoxTypeManager.getFromPreferences(getContext());
         
         //This item is not really a Box design, but a button
         sideListObjects.add(new BoxPrototype(0,0, R.mipmap.add));
         
         //Set adapter
-        adapter = new EditorListAdapter(getActivity(), sideListObjects);
+        adapter = new BoxDesignListAdapter(getActivity(), sideListObjects);
         editorListView.setAdapter(adapter);
     }
 

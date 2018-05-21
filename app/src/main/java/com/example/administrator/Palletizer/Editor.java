@@ -139,8 +139,6 @@ public class Editor extends Fragment {
             //Now, create an image that represents the aforementioned box
             drawBox(newBox);
 
-            //Move it to the center of the pallet TODO think about animations in the future
-            //moveTo(onScreenBoxes.get(stepBeingEdited), DEFAULT_X, DEFAULT_Y);
         }
     }
 
@@ -230,11 +228,7 @@ public class Editor extends Fragment {
         onScreenBoxes.clear();
     }
 
-    private void moveTo(ImageView itemToMove, int x, int y) {
-
-    }
-
-    private void moveToWithAnimation(ImageView itemToMove, int x, int y) {
+    private void moveWithAnimation(ImageView itemToMove, int x, int y) {
         ObjectAnimator editorLayoutAnimation_x = ObjectAnimator.ofFloat(itemToMove, "x", x);
         ObjectAnimator editorLayoutAnimation_y = ObjectAnimator.ofFloat(itemToMove, "y", y);
         AnimatorSet animSetline = new AnimatorSet();
@@ -463,14 +457,9 @@ public class Editor extends Fragment {
                     //Trigger only with user-generated interaction and
                     //If the list is not empty
                     if (designBeingEdited.boxList.size() > 0 && fromUser && designBeingEditedIsValid()) {
-
-                        //Calculate margin to ensure box is inside of the pallet
-                        //int yMargin = HEIGHT_PX - designBeingEdited.boxList.get(stepBeingEdited).height * CMTOPX;
-                        //if (progress < yMargin) {
                         designBeingEdited.boxList.get(stepBeingEdited).coords.y = progress;
                         onScreenBoxes.get(stepBeingEdited).setY(progress);
                         updateInfoText();
-                        //}
                     }
                 }
             }

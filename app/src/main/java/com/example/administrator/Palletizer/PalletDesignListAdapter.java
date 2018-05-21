@@ -10,12 +10,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class DesignListAdapter extends BaseAdapter {
+public class PalletDesignListAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<Design> designs;
 
-    public DesignListAdapter(Context context, ArrayList<Design> designs) {
+    public PalletDesignListAdapter(Context context, ArrayList<Design> designs) {
         this.mContext = context;
         this.designs = designs;
         this.mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -3,12 +3,10 @@ package com.example.administrator.Palletizer;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 
-public class Editor_add extends Fragment {
+public class EditorNewBoxDesign extends Fragment {
 
     private OnFragmentInteractionListener mFragmentInteraction;
 
@@ -49,7 +42,7 @@ public class Editor_add extends Fragment {
     private AlertDialog.Builder overwriteBuilder;
 
 
-    public Editor_add() {
+    public EditorNewBoxDesign() {
     }
 
     @Override
@@ -242,7 +235,7 @@ public class Editor_add extends Fragment {
             } else {
 
                 /*Create new object*/
-                BoxPrototype newCustomBox = new BoxPrototype(boxName, x, y, R.mipmap.box);
+                BoxPrototype newCustomBox = new BoxPrototype(0, boxName, x, y, R.mipmap.box);
 
                 /*Add new object to list*/
                 listOfCustomBoxes.add(newCustomBox);
@@ -255,6 +248,9 @@ public class Editor_add extends Fragment {
 
                 /*Reset everything to default*/
                 resetData();
+
+                /*Switch back to Editor*/
+                ((MainActivity)getActivity()).switchToLayout(R.id.nav_editor);
             }
 
         } else {
@@ -269,17 +265,17 @@ public class Editor_add extends Fragment {
 
 
     public void loadObjectList() {
-        listOfCustomBoxes = BoxTypeManager.getFromPreferences(getContext());
+        listOfCustomBoxes = BoxDesignManager.getFromPreferences(getContext());
     }
 
     public void saveObjectList() {
-        BoxTypeManager.saveToPreferences(listOfCustomBoxes, getContext());
+        BoxDesignManager.saveToPreferences(listOfCustomBoxes, getContext());
     }
 
     private boolean objectExists() {
         boolean exists = false;
         if(listOfCustomBoxes != null) {
-            exists = listOfCustomBoxes.contains(new BoxPrototype(boxName, 0,0,0));
+            exists = listOfCustomBoxes.contains(new BoxPrototype(0, boxName, 0,0,0));
         }
         return exists;
     }

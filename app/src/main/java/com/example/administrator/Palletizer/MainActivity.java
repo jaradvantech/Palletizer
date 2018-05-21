@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity
         Line.OnFragmentInteractionListener,
         Control.OnFragmentInteractionListener,
         Editor.OnFragmentInteractionListener,
-        Editor_add.OnFragmentInteractionListener,
+        EditorNewBoxDesign.OnFragmentInteractionListener,
         Manual.OnFragmentInteractionListener,
         Debug.OnFragmentInteractionListener,
         DebugWrite.OnFragmentInteractionListener,
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity
     private Line line = new Line();
     private Control algorithm = new Control();
     private Editor editor = new Editor();
-    private Editor_add editor_add = new Editor_add();
+    private EditorNewBoxDesign editor_add = new EditorNewBoxDesign();
     private Logs logs = new Logs();
     private Manual manual = new Manual();
     private Debug debug = new Debug();
@@ -259,6 +259,11 @@ public class MainActivity extends AppCompatActivity
          */
         if(previous_id == R.id.nav_editor) algorithm.refreshObjectList();
 
+        /*
+         * Update Box design list
+         */
+        if(previous_id == R.id.opt_editor_add) editor.refreshObjectList();
+
         //Select layouts to change
         ConstraintLayout new_layout = getLayoutByID(new_id);
         ConstraintLayout previous_layout = getLayoutByID(previous_id);
@@ -271,6 +276,11 @@ public class MainActivity extends AppCompatActivity
         if(previous_layout.equals(new_layout) == false) {
             doFragmentSwitchAnimation(new_layout, previous_layout);
         }
+    }
+
+    public void loadInEditor(int selectedDesign) {
+        editor.editDesign(selectedDesign);
+        switchToLayout(R.id.nav_editor);
     }
 
     public ConstraintLayout getLayoutByID(int id) {

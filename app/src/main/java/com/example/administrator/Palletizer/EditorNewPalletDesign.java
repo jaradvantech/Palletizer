@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-public class EditorNew extends AppCompatActivity {
+public class EditorNewPalletDesign extends AppCompatActivity {
 
     private AlertDialog.Builder overwriteBuilder;
     private AlertDialog.Builder invalidNameBuilder;
@@ -66,7 +66,7 @@ public class EditorNew extends AppCompatActivity {
             public void onClick(View v) {
                 String name = nameInput.getText().toString();
 
-                if(DesignManager.alreadyExists(name, EditorNew.this)) {
+                if(PalletDesignManager.alreadyExists(name, EditorNewPalletDesign.this)) {
                     AlertDialog dialog = overwriteBuilder.create();
                     dialog.setIcon(R.mipmap.warning);
                     dialog.show();

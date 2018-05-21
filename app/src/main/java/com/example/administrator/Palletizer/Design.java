@@ -10,7 +10,7 @@ public class Design {
      * Type 0: Prebuilt and tested by Lovalive
      * Type 1: Custom design
      */
-    private int type;
+    public int type;
     private String name;
     public ArrayList<Box> boxList;
 

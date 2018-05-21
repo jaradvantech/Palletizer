@@ -27,7 +27,7 @@
         </activity>
 
         <!-- This activity is part of the user interface -->
-        <activity android:name="com.example.administrator.Palletizer.EditorNew"></activity>
+        <activity android:name="com.example.administrator.Palletizer.EditorNewPalletDesign"></activity>
 
         <!-- The Real thing -->
         <activity

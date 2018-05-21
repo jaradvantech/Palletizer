@@ -11,6 +11,7 @@ public class BoxPrototype {
     public int width;
     public int height;
     public int textureResource;
+    public int type;
 
     BoxPrototype(){
     }
@@ -21,7 +22,8 @@ public class BoxPrototype {
         this.textureResource = textureResource;
     }
 
-    BoxPrototype(String name, int width, int height, int textureResource) {
+    BoxPrototype(int type, String name, int width, int height, int textureResource) {
+        this.type = type;
         this.name = name;
         this.width = width;
         this.height = height;

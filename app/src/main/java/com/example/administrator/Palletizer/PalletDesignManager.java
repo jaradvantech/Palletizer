@@ -10,7 +10,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DesignManager {
+public class PalletDesignManager {
 
     static ArrayList<Design> getFromPreferences(Context mainApplicationContext) {
         Gson gson = new Gson();
@@ -40,14 +40,33 @@ public class DesignManager {
     static void saveDesign(Design designToSave, Context mainApplicationContext) {
         ArrayList<Design> palletDesigns = getFromPreferences(mainApplicationContext);
 
-        //Append design to array
-        palletDesigns.add(designToSave);
+        //Find if a same-named design is already on the list and locate it
+        int position = -1;
+        for (int i = 0; i < palletDesigns.size(); i++) {
+            if (palletDesigns.get(i).getName().equals(designToSave.getName()))
+                position = i; //There should be no duplicated names
+        }
+
+        //If design already exists, overwrite it
+        if(position != -1) {
+            palletDesigns.set(position, designToSave);
+        }
+        //If not exists, append design to array
+        else {
+            palletDesigns.add(designToSave);
+        }
 
         //Save Array
         saveToPreferences(palletDesigns, mainApplicationContext);
     }
 
     static void saveToPreferences(ArrayList<Design> designList, Context mainApplicationContext) {
+        //Do not save default designs to avoid duplication
+        for (int i = 0; i < designList.size(); i++) {
+            if (designList.get(i).type == 0)
+                designList.remove(i);
+        }
+
         Gson gson = new Gson();
         SharedPreferences sharedPref = mainApplicationContext.getSharedPreferences("PALLETDESIGNS", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();

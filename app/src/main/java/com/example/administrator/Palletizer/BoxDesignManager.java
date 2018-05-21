@@ -10,7 +10,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoxTypeManager {
+public class BoxDesignManager {
 
     static ArrayList<BoxPrototype> getFromPreferences(Context mainApplicationContext) {
         Gson gson = new Gson();
@@ -23,8 +23,8 @@ public class BoxTypeManager {
         if(boxDesigns == null) boxDesigns = new ArrayList<BoxPrototype>();
 
         //Append default designs
-        boxDesigns.add(new BoxPrototype(80,80, R.mipmap.box_lovalive));
-        boxDesigns.add(new BoxPrototype(6, 80, R.mipmap.box_side));
+        boxDesigns.add(new BoxPrototype(0, "LOVALIVE", 40,40, R.mipmap.box_lovalive));
+        boxDesigns.add(new BoxPrototype(0, "LOVALIVE side", 6, 80, R.mipmap.box_side));
 
         return boxDesigns;
 
@@ -53,6 +53,12 @@ public class BoxTypeManager {
     }
 
     static void saveToPreferences(ArrayList<BoxPrototype> boxDesigns, Context mainApplicationContext) {
+        //Do not save default designs to avoid duplication
+        for (int i = 0; i < boxDesigns.size(); i++) {
+            if (boxDesigns.get(i).type == 0)
+                boxDesigns.remove(i);
+        }
+
         Gson gson = new Gson();
         SharedPreferences sharedPref = mainApplicationContext.getSharedPreferences("BOXTYPES", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();

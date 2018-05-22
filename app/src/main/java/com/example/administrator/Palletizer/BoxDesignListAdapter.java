@@ -6,17 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class BoxDesignListAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
-    private ArrayList<BoxPrototype> mDataSource;
+    private ArrayList<BoxDesign> mDataSource;
     private final float SCALE = 0.5f;
 
-    public BoxDesignListAdapter(Context context, ArrayList<BoxPrototype> items) {
+    public BoxDesignListAdapter(Context context, ArrayList<BoxDesign> items) {
         mContext = context;
         mDataSource = items;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -45,7 +44,7 @@ public class BoxDesignListAdapter extends BaseAdapter {
 
         ImageView thumbnailImageView = (ImageView) rowView.findViewById(R.id.editor_list_image);
 
-        BoxPrototype mObject = (BoxPrototype) getItem(position);
+        BoxDesign mObject = (BoxDesign) getItem(position);
         thumbnailImageView.setImageResource(mObject.textureResource);
 
         return rowView;

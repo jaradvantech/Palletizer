@@ -16,8 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 
 public class EditorNewBoxDesign extends Fragment {
 
@@ -37,7 +35,6 @@ public class EditorNewBoxDesign extends Fragment {
     private final int MAXLENGTH = 1200;
     private final int MINWIDTH = 3;
     private final int MINLENGTH = 3;
-    private ArrayList<BoxPrototype> listOfCustomBoxes;
     private AlertDialog.Builder saveBuilder;
     private AlertDialog.Builder overwriteBuilder;
 
@@ -66,9 +63,6 @@ public class EditorNewBoxDesign extends Fragment {
         //Create objects
         saveBuilder = new AlertDialog.Builder(getActivity());
         overwriteBuilder = new AlertDialog.Builder(getActivity());
-
-        //First step is loading the previous items
-        loadObjectList();
 
 
         /*****************************************************
@@ -217,42 +211,34 @@ public class EditorNewBoxDesign extends Fragment {
     }
 
 
-    /*
-     *
-     */
     private void saveNewObject(boolean overwrite) {
         readEnteredData();
         setPreview();
 
-        loadObjectList();
-
         if(enteredDataIsValid()) {
-            if(objectExists()  && overwrite==false) {
+            if(BoxDesignManager.alreadyExists(boxName, getContext()) && overwrite==false) {
+                //Name conflict
                 AlertDialog dialog = overwriteBuilder.create();
                 dialog.setIcon(R.mipmap.warning);
                 dialog.show();
 
+             //No name conflict
             } else {
-
                 /*Create new object*/
-                BoxPrototype newCustomBox = new BoxPrototype(0, boxName, x, y, R.mipmap.box);
-
-                /*Add new object to list*/
-                listOfCustomBoxes.add(newCustomBox);
+                BoxDesign newCustomBox = new BoxDesign(0, boxName, x, y, R.mipmap.box);
 
                 /*Write objects to SharedPrefs*/
-                saveObjectList();
+                BoxDesignManager.saveDesign(newCustomBox, getContext());
 
                 /*Pop tart*/
                 Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
 
-                /*Reset everything to default*/
+                /*Reset everything to default and Switch back to Editor*/
                 resetData();
-
-                /*Switch back to Editor*/
                 ((MainActivity)getActivity()).switchToLayout(R.id.nav_editor);
             }
 
+         //If data is not valid
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(getString(R.string.Warning));
@@ -262,24 +248,6 @@ public class EditorNewBoxDesign extends Fragment {
             dialog.show();
         }
     }
-
-
-    public void loadObjectList() {
-        listOfCustomBoxes = BoxDesignManager.getFromPreferences(getContext());
-    }
-
-    public void saveObjectList() {
-        BoxDesignManager.saveToPreferences(listOfCustomBoxes, getContext());
-    }
-
-    private boolean objectExists() {
-        boolean exists = false;
-        if(listOfCustomBoxes != null) {
-            exists = listOfCustomBoxes.contains(new BoxPrototype(0, boxName, 0,0,0));
-        }
-        return exists;
-    }
-
 
     int inputToInteger(EditText mUserInput) {
         //Get int from input

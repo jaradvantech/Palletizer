@@ -5,7 +5,7 @@ package com.example.administrator.Palletizer;
  * This menu shows a list of all the available box types for creating the pallets
  */
 
-public class BoxPrototype {
+public class BoxDesign {
 
     public String name;
     public int width;
@@ -13,16 +13,16 @@ public class BoxPrototype {
     public int textureResource;
     public int type;
 
-    BoxPrototype(){
+    BoxDesign(){
     }
 
-    BoxPrototype(int width, int height, int textureResource) {
+    BoxDesign(int width, int height, int textureResource) {
         this.width = width;
         this.height = height;
         this.textureResource = textureResource;
     }
 
-    BoxPrototype(int type, String name, int width, int height, int textureResource) {
+    BoxDesign(int type, String name, int width, int height, int textureResource) {
         this.type = type;
         this.name = name;
         this.width = width;
@@ -30,7 +30,7 @@ public class BoxPrototype {
         this.textureResource = textureResource;
     }
 
-    public boolean equals(BoxPrototype o) {
+    public boolean equals(BoxDesign o) {
         if(o.name.equals(this.name)) {
             return true;
         } else {

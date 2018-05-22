@@ -257,7 +257,10 @@ public class MainActivity extends AppCompatActivity
         /*
          * Update design list
          */
-        if(previous_id == R.id.nav_editor) algorithm.refreshObjectList();
+        if(previous_id == R.id.nav_editor) {
+            algorithm.refreshObjectList();
+            editor.onLeavingWarning();
+        }
 
         /*
          * Update Box design list
@@ -386,7 +389,7 @@ public class MainActivity extends AppCompatActivity
         protected TcpClient doInBackground( String... message ) {
 
             //we create a TCPClient object
-            mTcpClient = new TcpClient(new TcpClient.OnMessageReceived() {
+           mTcpClient = new TcpClient(new TcpClient.OnMessageReceived() {
                 @Override
                 //here the messageReceived method is implemented
                 public void messageReceived(String message) {
@@ -402,7 +405,8 @@ public class MainActivity extends AppCompatActivity
                     publishProgress("connectionstatechange", "connectionlost");
                 }
             });
-            mTcpClient.run(getApplicationContext());
+           //TODO uncomment when tcp is required
+           //mTcpClient.run(getApplicationContext());
 
             return null;
         }

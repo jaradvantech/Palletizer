@@ -42,7 +42,7 @@ public class BoxDesignListAdapter extends BaseAdapter {
         View rowView = mInflater.inflate(R.layout.editor_list_item, parent, false);
 
 
-        ImageView thumbnailImageView = (ImageView) rowView.findViewById(R.id.editor_list_image);
+        ImageView thumbnailImageView = (ImageView) rowView.findViewById(R.id.BoxDesignListObject_imageView_box);
 
         BoxDesign mObject = (BoxDesign) getItem(position);
         thumbnailImageView.setImageResource(mObject.textureResource);

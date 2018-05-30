@@ -595,18 +595,6 @@ public class Editor extends Fragment {
         saveDialogBuilder.setPositiveButton(getString(R.string.Save), saveDialogClickListener);
         saveDialogBuilder.setNegativeButton("Discard", saveDialogClickListener);
         saveDialogBuilder.setNeutralButton(getString(R.string.Cancel), saveDialogClickListener);
-
-        /*
-        editorListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                itemToDelete = position;
-                AlertDialog dialog = deleteDialogBuilder.create();
-                dialog.setIcon(R.mipmap.warning);
-                dialog.show();
-                return true;
-            }
-        });*/
     }
 
     /*
@@ -658,7 +646,6 @@ public class Editor extends Fragment {
      *                       --SIDE MENU FUNCTIONS--
      *****************************************************/
     private void createSideMenu() {
-        sideListObjects = new ArrayList<>();
         sideListObjects = BoxDesignManager.getFromPreferences(getContext());
         
         //This item is not really a Box design, but a button

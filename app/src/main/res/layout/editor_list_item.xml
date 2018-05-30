@@ -6,7 +6,7 @@
                 android:layout_height="match_parent">
 
   <ImageView
-      android:id="@+id/editor_list_image"
+      android:id="@+id/BoxDesignListObject_imageView_box"
       android:layout_width="250dp"
       android:layout_height="wrap_content"
       android:layout_centerHorizontal="true"
@@ -14,15 +14,26 @@
       app:srcCompat="@mipmap/box_lovalive" />
 
   <Space
+      android:id="@+id/BoxDesignListObject_spaceTop"
       android:layout_width="wrap_content"
       android:layout_height="16dp"
-      android:layout_above="@+id/editor_list_image"
+      android:layout_above="@+id/BoxDesignListObject_imageView_box"
       android:layout_centerHorizontal="true" />
 
+  <TextView
+      android:id="@+id/BoxDesignListObject_textView_caption"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/BoxDesignListObject_imageView_box"
+      android:layout_centerHorizontal="true"
+      android:text="TextView" />
+
   <Space
+      android:id="@+id/BoxDesignListObject_spaceBottom"
       android:layout_width="wrap_content"
       android:layout_height="16dp"
-      android:layout_below="@+id/editor_list_image"
-      android:layout_centerHorizontal="true" />
+      android:layout_alignStart="@+id/BoxDesignListObject_textView_caption"
+      android:layout_below="@+id/BoxDesignListObject_textView_caption"
+      android:layout_toStartOf="@+id/BoxDesignListObject_textView_caption" />
 
 </RelativeLayout>
